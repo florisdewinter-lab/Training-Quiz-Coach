@@ -1,10 +1,10 @@
 const CACHE_NAME = 'quiz-coach-v1';
 const ASSETS = [
-  '/training-quiz-coach/',
-  '/training-quiz-coach/index.html',
-  '/training-quiz-coach/manifest.json',
-  '/training-quiz-coach/icons/icon-192.png',
-  '/training-quiz-coach/icons/icon-512.png',
+  '/Training-Quiz-Coach/',
+  '/Training-Quiz-Coach/index.html',
+  '/Training-Quiz-Coach/manifest.json',
+  '/Training-Quiz-Coach/icons/icon-192.png',
+  '/Training-Quiz-Coach/icons/icon-512.png',
 ];
 
 self.addEventListener('install', e => {
