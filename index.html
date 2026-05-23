@@ -898,6 +898,11 @@ function renderAttention(){
 // ── SETTINGS ──────────────────────────────────────────────────────────────────
 function renderSettings(){
   var html='<div style="max-width:500px">';
+  html+='<div class="card" style="border:1px solid rgba(79,142,247,.3);background:rgba(79,142,247,.04)"><div class="ct">Publish to Students</div>';
+html+='<div style="font-size:13px;color:var(--tx2);margin-bottom:12px;line-height:1.6">Export all <strong style="color:var(--tx)">'+state.modules.length+' module(s)</strong> as a JSON file, then upload it to your GitHub repo to push updates to all students.</div>';
+html+='<button class="btn btn-p" onclick="publishModules()">⬆ Publish All Modules</button>';
+html+='<div style="font-size:11px;color:var(--tx3);margin-top:10px">After downloading, upload <strong>modules.json</strong> to the root of your Training-Quiz-Coach repo on GitHub.</div>';
+html+='</div>';
   html+='<div class="sh"><div><div class="st">Settings</div></div></div>';
   html+='<div class="card"><div class="ct">Appearance</div>';
   html+='<div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:600">Theme</div></div>';
@@ -931,6 +936,20 @@ function closeSidebar(){
   ov.style.display='none';
 }
 document.getElementById('overlay').onclick=closeSidebar;
+  
+// ── PUBLISH ───────────────────────────────────────────────────────────────────
+function publishModules(){
+  if(!state.modules.length){alert('No modules to publish.');return;}
+  var payload=JSON.stringify({
+    version: new Date().toISOString(),
+    modules: state.modules
+  }, null, 2);
+  var a=document.createElement('a');
+  a.href='data:application/json;charset=utf-8,'+encodeURIComponent(payload);
+  a.download='modules.json';
+  a.click();
+  alert('modules.json downloaded!\n\nNow upload it to your Training-Quiz-Coach repo on GitHub to make it live for students.');
+}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 if('serviceWorker' in navigator){
