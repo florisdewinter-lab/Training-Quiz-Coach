@@ -115,6 +115,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <script>
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 var SCRIPT_URL = '';
+var GITHUB_TOKEN = '';
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 var state = {
@@ -305,7 +306,7 @@ function renderModules(){
   // Publish bar
   html+='<div style="background:linear-gradient(135deg,rgba(79,142,247,.1),rgba(167,139,250,.1));border:1px solid rgba(79,142,247,.25);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">';
   html+='<div><div style="font-size:13px;font-weight:600;margin-bottom:2px">📡 Publish to Students</div>';
-  html+='<div style="font-size:11px;color:var(--tx2)">'+ms.length+' module(s) · Download modules.json then upload to GitHub</div></div>';
+  html+='<div style="font-size:11px;color:var(--tx2)">'+ms.length+' module(s) · Publishes directly to GitHub</div></div>';
   html+='<button id="publish-btn" class="btn btn-p btn-sm" onclick="publishModules()"'+(ms.length?'':' disabled')+'>⬆ Publish All Modules</button>';
   html+='</div>';
 
@@ -532,15 +533,28 @@ function renameModule(i){
 
 function publishModules(){
   if(!state.modules.length){alert('No modules to publish.');return;}
-  if(!SCRIPT_URL){alert('No Apps Script URL configured.\nGo to Settings to add it first.');return;}
+  var token=GITHUB_TOKEN;
+  if(!token){alert('No GitHub token configured.\nGo to Settings to add it first.');return;}
   var btn=document.getElementById('publish-btn');
   if(btn){btn.disabled=true;btn.innerHTML='<span class="spinner"></span>Publishing...';}
   var payload=JSON.stringify({version:nowISO(),modules:state.modules});
-  var url=SCRIPT_URL+'?action=publish_modules&data='+encodeURIComponent(payload);
-  fetch(url)
-    .then(function(r){return r.json();})
+  var encoded=btoa(unescape(encodeURIComponent(payload)));
+  var apiUrl='https://api.github.com/repos/florisdewinter-lab/Training-Quiz-Coach/contents/modules.json';
+  // First get current SHA if file exists
+  fetch(apiUrl,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}})
+    .then(function(r){ return r.ok?r.json():null; })
+    .then(function(existing){
+      var body={message:'Publish modules '+new Date().toISOString(),content:encoded};
+      if(existing&&existing.sha) body.sha=existing.sha;
+      return fetch(apiUrl,{
+        method:'PUT',
+        headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
+        body:JSON.stringify(body)
+      });
+    })
+    .then(function(r){ return r.json(); })
     .then(function(data){
-      if(data.status==='ok'){
+      if(data.content||data.commit){
         showToast('✅ Published! Students can now update their app.');
       } else {
         showToast('❌ Publish failed: '+(data.message||'Unknown error'),true);
@@ -877,6 +891,10 @@ function renderSettings(){
   html+='<div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:13px;font-weight:600">Theme</div>';
   html+='<div class="tog"><button class="tog-b'+(state.theme==='dark'?' active':'')+'" onclick="setTheme(\'dark\')">🌙 Dark</button><button class="tog-b'+(state.theme==='light'?' active':'')+'" onclick="setTheme(\'light\')">☀ Light</button></div></div></div>';
 
+  html+='<div class="card"><div class="ct">GitHub Token</div>';
+  html+='<div style="font-size:13px;color:var(--tx2);margin-bottom:10px;line-height:1.6">Required to publish modules directly to GitHub. Generate from GitHub → Settings → Developer settings → Personal access tokens.</div>';
+  html+='<div style="display:flex;gap:8px;margin-bottom:8px"><input class="inp" id="github-token" type="password" placeholder="ghp_..." value="'+esc(GITHUB_TOKEN)+'"><button class="btn btn-p btn-sm" onclick="saveGithubToken()">Save</button></div>';
+  html+='<div style="font-size:11px;color:var(--tx3)">Token is stored locally on this device only.</div></div>';
   html+='<div class="card"><div class="ct">Apps Script URL</div>';
   html+='<div style="font-size:13px;color:var(--tx2);margin-bottom:10px;line-height:1.6">Paste your Google Apps Script URL to enable Student Insights.</div>';
   html+='<div style="display:flex;gap:8px;margin-bottom:8px"><input class="inp" id="script-url" placeholder="https://script.google.com/macros/s/..." value="'+esc(SCRIPT_URL)+'"><button class="btn btn-p btn-sm" onclick="saveScriptURL()">Save</button></div>';
@@ -890,6 +908,15 @@ function renderSettings(){
 
   html+='</div>';
   return html;
+}
+
+function saveGithubToken(){
+  var el=document.getElementById('github-token');
+  if(el&&el.value.trim()){
+    GITHUB_TOKEN=el.value.trim();
+    try{localStorage.setItem('qc_github_token',GITHUB_TOKEN);}catch(e){}
+    showToast('✅ Token saved!');
+  }
 }
 
 function saveScriptURL(){
