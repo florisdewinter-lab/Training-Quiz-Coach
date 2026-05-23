@@ -275,10 +275,7 @@ function parseCSVFile(text){
 var NAV=[
   {id:'overview',icon:'⬡',label:'Overview'},
   {id:'modules',icon:'📁',label:'Modules'},
-  {id:'quiz',icon:'▶',label:'Start Quiz'},
-  {id:'results',icon:'📋',label:'Results'},
-  {id:'dashboard',icon:'📊',label:'Progress'},
-  {id:'attention',icon:'⚠',label:'Attention'},
+  {id:'insights',icon:'👥',label:'Student Insights'},
   {id:'settings',icon:'⚙',label:'Settings'},
 ];
 
@@ -308,10 +305,7 @@ function renderPage(){
   switch(state.page){
     case 'overview': el.innerHTML=renderOverview(); break;
     case 'modules': if(state.activeModuleIdx!==null){el.innerHTML=renderModuleDetail(); bindModuleDetail();}else{el.innerHTML=renderModules(); bindModules();} break;
-    case 'quiz': el.innerHTML=renderSetup(); bindSetup(); break;
-    case 'results': el.innerHTML=renderResults(); bindResults(); break;
-    case 'dashboard': el.innerHTML=renderDashboard(); break;
-    case 'attention': el.innerHTML=renderAttention(); break;
+    case 'insights': el.innerHTML=renderInsights(); break;
     case 'settings': el.innerHTML=renderSettings(); bindSettings(); break;
   }
 }
@@ -1164,6 +1158,147 @@ function renderAttention(){
   return html;
 }
 
+
+// ── STUDENT INSIGHTS ──────────────────────────────────────────────────────────
+var SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
+
+var insightsState = { results: [], loading: false, loaded: false, err: '' };
+
+function loadInsights(){
+  insightsState.loading=true;
+  insightsState.err='';
+  renderPage();
+  fetch(SCRIPT_URL+'?t='+Date.now())
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(data){
+      insightsState.results=data.results||[];
+      insightsState.loading=false;
+      insightsState.loaded=true;
+      renderPage();
+    })
+    .catch(function(e){
+      insightsState.loading=false;
+      insightsState.err=e.message;
+      renderPage();
+    });
+}
+
+function renderInsights(){
+  var pm=state.passMark;
+  var sr=insightsState.results;
+
+  var html='<div class="sh"><div><div class="st">Student Insights</div><div class="ss">How your students are performing</div></div>';
+  html+='<button class="btn btn-s btn-sm" onclick="loadInsights()">'+(insightsState.loading?'<span class="spinner"></span>Loading...':'🔄 Refresh')+'</button></div>';
+
+  if(!insightsState.loaded&&!insightsState.loading){
+    html+='<div class="card" style="text-align:center;padding:40px 20px">';
+    html+='<div style="font-size:44px;margin-bottom:12px">👥</div>';
+    html+='<div style="font-size:16px;font-weight:600;margin-bottom:7px">Load Student Results</div>';
+    html+='<div style="font-size:13px;color:var(--tx2);margin-bottom:16px">Fetch the latest results from all students.</div>';
+    html+='<button class="btn btn-p" onclick="loadInsights()">Load Results</button>';
+    html+='</div>';
+    return html;
+  }
+
+  if(insightsState.err){
+    html+='<div class="card" style="border:1px solid rgba(247,88,88,.3)"><div style="color:var(--rd);font-size:13px;margin-bottom:8px;font-weight:600">⚠ Could not load results</div>';
+    html+='<div style="font-size:12px;color:var(--tx2);margin-bottom:12px">'+esc(insightsState.err)+'</div>';
+    html+='<div style="font-size:11px;color:var(--tx3);margin-bottom:12px">Make sure your Apps Script URL is set correctly in the code.</div>';
+    html+='<button class="btn btn-p btn-sm" onclick="loadInsights()">Try Again</button></div>';
+    return html;
+  }
+
+  if(!sr.length){
+    html+='<div class="card"><div style="text-align:center;padding:32px 20px">';
+    html+='<div style="font-size:44px;margin-bottom:12px">📭</div>';
+    html+='<div style="font-size:16px;font-weight:600;margin-bottom:7px">No results yet</div>';
+    html+='<div style="font-size:13px;color:var(--tx2)">Results will appear here once students complete quizzes.</div>';
+    html+='</div></div>';
+    return html;
+  }
+
+  // ── KPIs ──
+  var students=[...new Set(sr.map(function(r){return r.studentName;}))];
+  var avgScore=Math.round(sr.reduce(function(a,r){return a+Number(r.score);},0)/sr.length);
+  var passRate=pct(sr.filter(function(r){return r.passed==='true'||r.passed===true;}).length,sr.length);
+  html+='<div class="g4" style="margin-bottom:16px">';
+  [{l:'Students',v:students.length},{l:'Total Quizzes',v:sr.length},{l:'Avg Score',v:avgScore+'%'},{l:'Pass Rate',v:passRate+'%'}].forEach(function(k){
+    html+='<div class="card" style="margin-bottom:0"><div class="kv">'+k.v+'</div><div class="kl">'+k.l+'</div></div>';
+  });
+  html+='</div>';
+
+  // ── TOPIC STRUGGLES ──
+  var topicMap={};
+  sr.forEach(function(r){
+    var tb={};
+    try{ tb=typeof r.topicBreakdown==='string'?JSON.parse(r.topicBreakdown):r.topicBreakdown; }catch(e){}
+    Object.keys(tb||{}).forEach(function(t){
+      var d=tb[t];
+      if(!topicMap[t])topicMap[t]={correct:0,total:0};
+      topicMap[t].correct+=Number(d.correct||0);
+      topicMap[t].total+=Number(d.total||0);
+    });
+  });
+  var topicArr=Object.keys(topicMap).map(function(t){
+    return{topic:t,avg:pct(topicMap[t].correct,topicMap[t].total),correct:topicMap[t].correct,total:topicMap[t].total};
+  }).sort(function(a,b){return a.avg-b.avg;});
+
+  html+='<div class="g2" style="margin-bottom:14px">';
+
+  // Weakest topics
+  html+='<div class="card" style="margin-bottom:0"><div class="ct">⚠ Weakest Topics (Group)</div>';
+  topicArr.slice(0,8).forEach(function(t){
+    var col=t.avg<60?'var(--rd)':t.avg<75?'var(--am)':'var(--gr)';
+    html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">';
+    html+='<div style="font-size:11px;color:var(--tx2);width:100px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(t.topic)+'</div>';
+    html+='<div style="flex:1;background:var(--bg3);border-radius:99px;height:14px;overflow:hidden">';
+    html+='<div style="width:'+t.avg+'%;background:'+col+';height:100%;border-radius:99px;display:flex;align-items:center;padding-left:5px">';
+    html+='<span style="font-size:9px;color:#fff;font-weight:700">'+t.avg+'%</span></div></div>';
+    html+='<div style="font-size:10px;color:var(--tx3);white-space:nowrap">'+t.correct+'/'+t.total+'</div>';
+    html+='</div>';
+  });
+  html+='</div>';
+
+  // Student leaderboard
+  html+='<div class="card" style="margin-bottom:0"><div class="ct">👤 Students</div>';
+  var studentStats=students.map(function(name){
+    var rows=sr.filter(function(r){return r.studentName===name;});
+    var avg=Math.round(rows.reduce(function(a,r){return a+Number(r.score);},0)/rows.length);
+    var passes=rows.filter(function(r){return r.passed==='true'||r.passed===true;}).length;
+    var last=rows[rows.length-1];
+    return{name:name,avg:avg,quizzes:rows.length,passes:passes,lastDate:last?last.date:''};
+  }).sort(function(a,b){return b.avg-a.avg;});
+
+  studentStats.forEach(function(s,i){
+    var col=s.avg>=pm?'var(--gr)':s.avg>=pm*0.8?'var(--am)':'var(--rd)';
+    html+='<div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;padding:9px 11px;background:var(--bg3);border-radius:8px">';
+    html+='<div style="width:22px;height:22px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--tx3)">'+(i+1)+'</div>';
+    html+='<div style="flex:1"><div style="font-size:12px;font-weight:600">'+esc(s.name)+'</div>';
+    html+='<div style="font-size:10px;color:var(--tx3)">'+s.quizzes+' quizzes · '+s.passes+' passed'+(s.lastDate?' · '+fmtDate(s.lastDate):'')+'</div></div>';
+    html+='<div style="font-size:14px;font-weight:700;color:'+col+'">'+s.avg+'%</div>';
+    html+='</div>';
+  });
+  html+='</div></div>';
+
+  // Per-module breakdown
+  html+='<div class="card"><div class="ct">📋 Results by Module</div>';
+  var moduleNames=[...new Set(sr.map(function(r){return r.moduleName;}))];
+  moduleNames.forEach(function(mn){
+    var rows=sr.filter(function(r){return r.moduleName===mn;});
+    var avg=Math.round(rows.reduce(function(a,r){return a+Number(r.score);},0)/rows.length);
+    var passes=rows.filter(function(r){return r.passed==='true'||r.passed===true;}).length;
+    var col=avg>=pm?'var(--gr)':avg>=pm*0.8?'var(--am)':'var(--rd)';
+    html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:11px 13px;background:var(--bg3);border-radius:8px">';
+    html+='<div style="flex:1"><div style="font-size:13px;font-weight:600;margin-bottom:2px">'+esc(mn)+'</div>';
+    html+='<div style="font-size:11px;color:var(--tx2)">'+rows.length+' attempts · '+passes+' passed · '+pct(passes,rows.length)+'% pass rate</div></div>';
+    html+='<div style="font-size:16px;font-weight:700;color:'+col+'">'+avg+'%</div>';
+    html+='</div>';
+  });
+  html+='</div>';
+
+  return html;
+}
+
 // ── SETTINGS ──────────────────────────────────────────────────────────────────
 function renderSettings(){
   var html='<div style="max-width:500px">';
@@ -1171,6 +1306,10 @@ function renderSettings(){
   html+='<div class="card"><div class="ct">Appearance</div>';
   html+='<div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:600">Theme</div></div>';
   html+='<div class="tog"><button class="tog-b'+(state.theme==='dark'?' active':'')+'" onclick="setTheme(\'dark\')">🌙 Dark</button><button class="tog-b'+(state.theme==='light'?' active':'')+'" onclick="setTheme(\'light\')">☀ Light</button></div></div></div>';
+  html+='<div class="card"><div class="ct">Apps Script URL</div>';
+  html+='<div style="font-size:13px;color:var(--tx2);margin-bottom:10px;line-height:1.6">Paste your Google Apps Script web app URL here to enable Student Insights.</div>';
+  html+='<div style="display:flex;gap:8px;margin-bottom:8px"><input class="inp" id="script-url" placeholder="https://script.google.com/macros/s/..." value="'+esc(SCRIPT_URL==='PASTE_YOUR_APPS_SCRIPT_URL_HERE'?'':SCRIPT_URL)+'"><button class="btn btn-p btn-sm" onclick="saveScriptURL()">Save</button></div>';
+  html+='<div style="font-size:11px;color:var(--tx3)">Get this URL from Google Apps Script → Deploy → Manage Deployments</div></div>';
   html+='<div class="card"><div class="ct">Pass Threshold</div>';
   html+='<div style="font-size:13px;font-weight:600;margin-bottom:3px">Minimum score to pass (%)</div>';
   html+='<div style="font-size:11px;color:var(--tx2);margin-bottom:11px">Default: 75%</div>';
@@ -1181,6 +1320,14 @@ function renderSettings(){
 }
 
 function bindSettings(){}
+function saveScriptURL(){
+  var el=document.getElementById('script-url');
+  if(el&&el.value.trim()){
+    SCRIPT_URL=el.value.trim();
+    try{ localStorage.setItem('qc_script_url', SCRIPT_URL); }catch(e){}
+    alert('URL saved! Go to Student Insights to load results.');
+  }
+}
 function savePassMark(){ var el=document.getElementById('pass-mark'); if(el) state.passMark=+el.value; saveState(); renderPage(); }
 
 // ── THEME & SIDEBAR ───────────────────────────────────────────────────────────
@@ -1203,6 +1350,7 @@ document.getElementById('overlay').onclick=closeSidebar;
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 loadState();
+try{ var _su=localStorage.getItem('qc_script_url'); if(_su) SCRIPT_URL=_su; }catch(e){}
 if(state.theme==='light') document.documentElement.setAttribute('data-theme','light');
 document.getElementById('theme-btn').textContent=state.theme==='dark'?'☀':'🌙';
 if('serviceWorker' in navigator){
