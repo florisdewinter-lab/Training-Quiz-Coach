@@ -535,25 +535,22 @@ function publishModules(){
   if(!SCRIPT_URL){alert('No Apps Script URL configured.\nGo to Settings to add it first.');return;}
   var btn=document.getElementById('publish-btn');
   if(btn){btn.disabled=true;btn.innerHTML='<span class="spinner"></span>Publishing...';}
-  var payload=JSON.stringify({type:'publish_modules',version:nowISO(),modules:state.modules});
-  fetch(SCRIPT_URL,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:payload,
-  })
-  .then(function(r){return r.json();})
-  .then(function(data){
-    if(data.status==='ok'){
-      showToast('✅ Published! Students can now update their app.');
-    } else {
-      showToast('❌ Publish failed: '+(data.message||'Unknown error'),true);
-    }
-    if(btn){btn.disabled=false;btn.innerHTML='⬆ Publish All Modules';}
-  })
-  .catch(function(e){
-    showToast('❌ Publish failed: '+e.message,true);
-    if(btn){btn.disabled=false;btn.innerHTML='⬆ Publish All Modules';}
-  });
+  var payload=JSON.stringify({version:nowISO(),modules:state.modules});
+  var url=SCRIPT_URL+'?action=publish_modules&data='+encodeURIComponent(payload);
+  fetch(url)
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(data.status==='ok'){
+        showToast('✅ Published! Students can now update their app.');
+      } else {
+        showToast('❌ Publish failed: '+(data.message||'Unknown error'),true);
+      }
+      if(btn){btn.disabled=false;btn.innerHTML='⬆ Publish All Modules';}
+    })
+    .catch(function(e){
+      showToast('❌ Publish failed: '+e.message,true);
+      if(btn){btn.disabled=false;btn.innerHTML='⬆ Publish All Modules';}
+    });
 }
 
 function showToast(msg,isErr){
