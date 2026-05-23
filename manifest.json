@@ -2,7 +2,7 @@
   "name": "Training Quiz Coach",
   "short_name": "Quiz Coach",
   "description": "Aviation training quiz app",
-  "start_url": "/training-quiz-coach/",
+  "start_url": "/Training-Quiz-Coach/",
   "display": "standalone",
   "background_color": "#0a0c10",
   "theme_color": "#4f8ef7",
