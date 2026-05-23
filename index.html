@@ -158,6 +158,8 @@ var state = {
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 
+var insightsState = { results: [], loading: false, loaded: false, err: '' };
+
 // ── PERSISTENCE ───────────────────────────────────────────────────────────────
 function saveState(){
   try{
@@ -1167,7 +1169,7 @@ function renderAttention(){
 // ── STUDENT INSIGHTS ──────────────────────────────────────────────────────────
 var SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
 
-var insightsState = { results: [], loading: false, loaded: false, err: '' };
+
 
 function loadInsights(){
   insightsState.loading=true;
