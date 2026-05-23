@@ -7,6 +7,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Quiz Coach"/>
 <title>Training Quiz Coach</title>
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4f8ef7">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -930,6 +933,11 @@ function closeSidebar(){
 document.getElementById('overlay').onclick=closeSidebar;
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('service-worker.js');
+  });
+}
 renderNav();
 renderPage();
 </script>
