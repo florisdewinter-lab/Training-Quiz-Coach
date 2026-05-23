@@ -1,4 +1,4 @@
-const CACHE_NAME = 'quiz-coach-v6';
+const CACHE_NAME = 'quiz-coach-v7';
 const ASSETS = [
   '/Training-Quiz-Coach/',
   '/Training-Quiz-Coach/index.html',
