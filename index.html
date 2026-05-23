@@ -153,6 +153,7 @@ var state = {
   sessions: [],
   passMark: 75,
   activeQuiz: null,
+  activeModuleIdx: null,
 };
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
@@ -284,6 +285,7 @@ var NAV=[
 function navigate(page){
   state.page=page;
   state.activeQuiz=null;
+  state.activeModuleIdx=null;
   renderNav();
   renderPage();
   closeSidebar();
@@ -296,7 +298,7 @@ function renderNav(){
     html+='<div class="ni '+active+'" onclick="navigate(\''+item.id+'\')"><span>'+item.icon+'</span>'+item.label+'</div>';
   });
   document.getElementById('nav').innerHTML=html;
-  var label=state.activeQuiz?'Quiz in Progress':(NAV.find(function(n){return n.id===state.page;})||{}).label||'';
+  var label=state.activeQuiz?'Quiz in Progress':state.activeModuleIdx!==null&&state.page==='modules'?(state.modules[state.activeModuleIdx]||{}).name||'Module Detail':(NAV.find(function(n){return n.id===state.page;})||{}).label||'';
   document.getElementById('page-title').textContent=label;
 }
 
@@ -305,7 +307,7 @@ function renderPage(){
   if(state.activeQuiz){ el.innerHTML=renderQuiz(); bindQuiz(); return; }
   switch(state.page){
     case 'overview': el.innerHTML=renderOverview(); break;
-    case 'modules': el.innerHTML=renderModules(); bindModules(); break;
+    case 'modules': if(state.activeModuleIdx!==null){el.innerHTML=renderModuleDetail(); bindModuleDetail();}else{el.innerHTML=renderModules(); bindModules();} break;
     case 'quiz': el.innerHTML=renderSetup(); bindSetup(); break;
     case 'results': el.innerHTML=renderResults(); bindResults(); break;
     case 'dashboard': el.innerHTML=renderDashboard(); break;
@@ -397,7 +399,10 @@ function renderModules(){
         html+='<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">';
         m.topics.slice(0,3).forEach(function(t){html+='<span class="badge b-topic">'+esc(t)+'</span>';});
         html+='</div>';
-        html+='<button class="btn btn-p btn-sm" onclick="event.stopPropagation();selectModule('+i+')">▶ Start Quiz</button>';
+        html+='<div style="display:flex;gap:6px;margin-top:4px">';
+        html+='<button class="btn btn-p btn-sm" onclick="event.stopPropagation();selectModule('+i+')">▶ Quiz</button>';
+        html+='<button class="btn btn-s btn-sm" onclick="event.stopPropagation();openModuleDetail('+i+')">👁 View</button>';
+        html+='</div>';
         html+='</div>';
       });
       html+='</div></div>';
@@ -585,6 +590,192 @@ function renameModule(i){
     saveState();
     renderPage();
   }
+}
+
+
+// ── MODULE DETAIL ─────────────────────────────────────────────────────────────
+var detailState={editIdx:null,qText:'',opts:['','','',''],correct:0,explain:'',topic:'',diff:'medium',filter:'',err:''};
+
+function openModuleDetail(i){
+  state.activeModuleIdx=i;
+  detailState={editIdx:null,qText:'',opts:['','','',''],correct:0,explain:'',topic:'',diff:'medium',filter:'',err:''};
+  renderNav();
+  renderPage();
+}
+
+function closeModuleDetail(){
+  state.activeModuleIdx=null;
+  detailState.editIdx=null;
+  renderNav();
+  renderPage();
+}
+
+function renderModuleDetail(){
+  var mi=state.activeModuleIdx;
+  var m=state.modules[mi];
+  if(!m) return '<div class="card"><div class="empty">Module not found.</div></div>';
+  var L=['A','B','C','D'];
+  var qs=m.questions;
+  var filtered=detailState.filter?qs.filter(function(q){
+    return q.text.toLowerCase().includes(detailState.filter.toLowerCase())||
+           q.topic.toLowerCase().includes(detailState.filter.toLowerCase());
+  }):qs;
+
+  var html='';
+  // Header
+  html+='<div class="sh">';
+  html+='<div style="display:flex;align-items:center;gap:10px">';
+  html+='<button class="btn btn-s btn-sm" onclick="closeModuleDetail()">← Back</button>';
+  html+='<div><div class="st">'+esc(m.name)+'</div>';
+  html+='<div class="ss">'+qs.length+' questions · '+(m.category||'Uncategorised')+'</div></div>';
+  html+='</div>';
+  html+='<button class="btn btn-p btn-sm" onclick="selectModule('+mi+')">▶ Start Quiz</button>';
+  html+='</div>';
+
+  // Edit form (shown when editing)
+  if(detailState.editIdx!==null){
+    html+='<div class="card" style="border:1px solid rgba(79,142,247,.3);margin-bottom:14px">';
+    html+='<div class="ct">Editing Question '+(detailState.editIdx+1)+'</div>';
+    html+='<div style="margin-bottom:10px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:5px">Question</label>';
+    html+='<textarea class="ta" id="dq-text" style="min-height:65px">'+esc(detailState.qText)+'</textarea></div>';
+    html+='<div style="margin-bottom:10px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:6px">Options</label>';
+    for(var i=0;i<4;i++){
+      var bc=detailState.correct===i?'var(--gr)':'var(--bd2)';
+      var bg=detailState.correct===i?'rgba(52,212,138,.15)':'var(--bg4)';
+      var fc=detailState.correct===i?'var(--gr)':'var(--tx2)';
+      html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">';
+      html+='<button onclick="detailSetCorrect('+i+')" style="width:28px;height:28px;border-radius:6px;border:2px solid '+bc+';background:'+bg+';color:'+fc+';font-weight:700;font-size:12px;cursor:pointer;flex-shrink:0;font-family:inherit">'+L[i]+'</button>';
+      html+='<input class="inp" id="dopt-'+i+'" placeholder="Option '+L[i]+'..." value="'+esc(detailState.opts[i])+'">';
+      html+='</div>';
+    }
+    html+='<div style="font-size:11px;color:var(--gr);margin-top:2px">✓ Option '+L[detailState.correct]+' is correct</div></div>';
+    html+='<div class="g2" style="margin-bottom:10px">';
+    html+='<div><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:4px">Topic</label>';
+    html+='<input class="inp" id="dq-topic" value="'+esc(detailState.topic)+'"></div>';
+    html+='<div><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:4px">Difficulty</label>';
+    html+='<select class="sel" id="dq-diff"><option value="easy"'+(detailState.diff==='easy'?' selected':'')+'>Easy</option><option value="medium"'+(detailState.diff==='medium'?' selected':'')+'>Medium</option><option value="hard"'+(detailState.diff==='hard'?' selected':'')+'>Hard</option></select></div>';
+    html+='</div>';
+    html+='<div style="margin-bottom:10px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:4px">Explanation</label>';
+    html+='<input class="inp" id="dq-explain" value="'+esc(detailState.explain)+'"></div>';
+    if(detailState.err) html+='<div class="err-box">'+esc(detailState.err)+'</div>';
+    html+='<div style="display:flex;gap:8px;margin-top:10px">';
+    html+='<button class="btn btn-p" onclick="detailSaveQuestion()">💾 Save Changes</button>';
+    html+='<button class="btn btn-s" onclick="detailCancelEdit()">Cancel</button>';
+    html+='</div></div>';
+  }
+
+  // Search/filter
+  html+='<div style="display:flex;gap:8px;margin-bottom:14px;align-items:center">';
+  html+='<input class="inp" id="detail-filter" placeholder="🔍 Search questions or topics..." value="'+esc(detailState.filter)+'" oninput="detailFilter(this.value)">';
+  html+='<span style="font-size:11px;color:var(--tx3);white-space:nowrap">'+filtered.length+'/'+qs.length+'</span>';
+  html+='</div>';
+
+  // Questions list
+  html+='<div class="card"><div class="ct">Questions</div>';
+  if(!filtered.length){
+    html+='<div style="color:var(--tx3);font-size:13px;text-align:center;padding:20px 0">No questions match your search.</div>';
+  } else {
+    filtered.forEach(function(q){
+      var qi=qs.indexOf(q);
+      var isEditing=detailState.editIdx===qi;
+      html+='<div style="padding:12px 14px;background:'+(isEditing?'rgba(79,142,247,.06)':'var(--bg3)')+';border-radius:8px;margin-bottom:8px;border:1px solid '+(isEditing?'rgba(79,142,247,.3)':'transparent')+'">';
+      html+='<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">';
+      html+='<div style="flex:1">';
+      html+='<div style="display:flex;gap:5px;margin-bottom:5px;flex-wrap:wrap">';
+      html+='<span style="font-size:10px;color:var(--tx3);font-weight:700">'+(qi+1)+'.</span>';
+      html+='<span class="badge b-topic">'+esc(q.topic)+'</span>';
+      html+='<span class="badge b-'+q.difficulty+'">'+q.difficulty+'</span>';
+      html+='</div>';
+      html+='<div style="font-size:13px;font-weight:500;line-height:1.5;margin-bottom:7px">'+esc(q.text)+'</div>';
+      html+='<div style="display:flex;gap:5px;flex-wrap:wrap">';
+      q.options.forEach(function(opt,oi){
+        var isCorrect=oi===q.correctIndex;
+        html+='<span style="font-size:11px;padding:2px 8px;border-radius:5px;background:'+(isCorrect?'rgba(52,212,138,.12)':'var(--bg4)')+';color:'+(isCorrect?'var(--gr)':'var(--tx3)')+';border:1px solid '+(isCorrect?'rgba(52,212,138,.3)':'transparent')+'">';
+        html+=L[oi]+'. '+esc(opt)+'</span>';
+      });
+      html+='</div>';
+      if(q.explanation) html+='<div style="font-size:11px;color:var(--tx3);margin-top:5px">💡 '+esc(q.explanation)+'</div>';
+      html+='</div>';
+      html+='<div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">';
+      html+='<button class="btn btn-s btn-sm" onclick="detailEditQuestion('+qi+')">✏️</button>';
+      html+='<button class="btn btn-sm" style="background:rgba(247,88,88,.08);color:var(--rd);border:1px solid rgba(247,88,88,.2)" onclick="detailDeleteQuestion('+qi+')">🗑</button>';
+      html+='</div></div></div>';
+    });
+  }
+  html+='</div>';
+  return html;
+}
+
+function bindModuleDetail(){
+  // filter input already uses oninput inline
+}
+
+function detailFilter(v){
+  detailState.filter=v;
+  renderPage();
+}
+
+function detailSaveFormState(){
+  var qt=document.getElementById('dq-text'); if(qt) detailState.qText=qt.value;
+  for(var i=0;i<4;i++){var o=document.getElementById('dopt-'+i);if(o)detailState.opts[i]=o.value;}
+  var tp=document.getElementById('dq-topic');if(tp)detailState.topic=tp.value;
+  var df=document.getElementById('dq-diff');if(df)detailState.diff=df.value;
+  var ex=document.getElementById('dq-explain');if(ex)detailState.explain=ex.value;
+}
+
+function detailSetCorrect(i){ detailSaveFormState(); detailState.correct=i; renderPage(); }
+
+function detailEditQuestion(i){
+  var m=state.modules[state.activeModuleIdx];
+  var q=m.questions[i];
+  detailState.editIdx=i;
+  detailState.qText=q.text;
+  detailState.opts=[...q.options];
+  detailState.correct=q.correctIndex;
+  detailState.explain=q.explanation||'';
+  detailState.topic=q.topic;
+  detailState.diff=q.difficulty;
+  detailState.err='';
+  renderPage();
+  // Scroll to top
+  document.getElementById('content').scrollTop=0;
+}
+
+function detailSaveQuestion(){
+  detailSaveFormState();
+  if(!detailState.qText.trim()){detailState.err='Question text required.';renderPage();return;}
+  if(detailState.opts.some(function(o){return !o.trim();})){detailState.err='All 4 options required.';renderPage();return;}
+  if(!detailState.topic.trim()){detailState.err='Topic required.';renderPage();return;}
+  var m=state.modules[state.activeModuleIdx];
+  m.questions[detailState.editIdx]={
+    id:m.questions[detailState.editIdx].id,
+    text:detailState.qText.trim(),
+    options:detailState.opts.map(function(o){return o.trim();}),
+    correctIndex:detailState.correct,
+    explanation:detailState.explain.trim(),
+    topic:detailState.topic.trim(),
+    difficulty:detailState.diff
+  };
+  m.topics=[...new Set(m.questions.map(function(q){return q.topic;}))];
+  detailState.editIdx=null;
+  detailState.qText=''; detailState.opts=['','','','']; detailState.correct=0; detailState.explain=''; detailState.topic=''; detailState.err='';
+  saveState();
+  renderPage();
+}
+
+function detailCancelEdit(){
+  detailState.editIdx=null;
+  detailState.err='';
+  renderPage();
+}
+
+function detailDeleteQuestion(i){
+  if(!confirm('Delete this question?')) return;
+  var m=state.modules[state.activeModuleIdx];
+  m.questions.splice(i,1);
+  m.topics=[...new Set(m.questions.map(function(q){return q.topic;}))];
+  saveState();
+  renderPage();
 }
 
 // ── QUIZ SETUP ────────────────────────────────────────────────────────────────
