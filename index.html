@@ -24,9 +24,7 @@
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px;line-height:1.5}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
 .app{display:flex;height:100vh;overflow:hidden}
-/* SIDEBAR */
 .sb{width:210px;min-width:210px;background:var(--bg2);border-right:1px solid var(--bd);display:flex;flex-direction:column;transition:transform .3s;z-index:100}
-.sb.hidden{transform:translateX(-100%);position:fixed;top:0;bottom:0;left:0;box-shadow:0 4px 24px rgba(0,0,0,.5)}
 .sb-logo{padding:18px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700}
 .sb-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--ac),var(--pu));display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .sb-nav{flex:1;padding:10px 8px;overflow-y:auto}
@@ -35,23 +33,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ni:hover{background:var(--bg3);color:var(--tx)}
 .ni.active{background:rgba(79,142,247,.12);color:var(--ac2);border-color:rgba(79,142,247,.2)}
 .sb-foot{padding:10px 12px;border-top:1px solid var(--bd);font-size:10px;color:var(--tx3)}
-/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .topbar{height:54px;background:var(--bg2);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0}
 .tb-title{font-size:15px;font-weight:600;flex:1}
 .content{flex:1;overflow-y:auto;padding:20px}
-/* CARDS */
 .card{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:14px}
 .ct{font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;font-family:inherit;white-space:nowrap;text-decoration:none}
-.btn-p{background:var(--ac);color:#fff}.btn-p:hover{background:var(--ac2);transform:translateY(-1px)}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;font-family:inherit;white-space:nowrap}
+.btn-p{background:var(--ac);color:#fff}.btn-p:hover{background:var(--ac2)}
 .btn-s{background:var(--bg3);color:var(--tx);border:1px solid var(--bd2)}.btn-s:hover{background:var(--bg4)}
 .btn-g{background:transparent;color:var(--tx2);border:none}.btn-g:hover{background:var(--bg3);color:var(--tx)}
 .btn-sm{padding:5px 10px;font-size:12px}
 .btn-lg{padding:12px 22px;font-size:15px;width:100%;justify-content:center}
-.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
-/* BADGES */
+.btn:disabled{opacity:.4;cursor:not-allowed}
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
 .b-easy{background:rgba(52,212,138,.15);color:var(--gr)}
 .b-medium{background:rgba(247,169,52,.15);color:var(--am)}
@@ -59,63 +53,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .b-topic{background:rgba(79,142,247,.12);color:var(--ac2)}
 .b-pass{background:rgba(52,212,138,.15);color:var(--gr)}
 .b-fail{background:rgba(247,88,88,.15);color:var(--rd)}
-/* INPUTS */
 .inp,.ta,.sel{background:var(--bg3);border:1px solid var(--bd2);border-radius:8px;color:var(--tx);font-family:inherit;font-size:13px;width:100%;padding:9px 12px;transition:border-color .15s}
-.ta{resize:vertical;min-height:100px;padding:10px 12px}
+.ta{resize:vertical;min-height:80px}
 .sel{cursor:pointer}
-.inp:focus,.ta:focus,.sel:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px rgba(79,142,247,.1)}
+.inp:focus,.ta:focus,.sel:focus{outline:none;border-color:var(--ac)}
 .inp::placeholder,.ta::placeholder{color:var(--tx3)}
-/* GRID */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-/* KPI */
 .kv{font-size:26px;font-weight:700;letter-spacing:-1px;line-height:1}
 .kl{font-size:11px;color:var(--tx2);margin-top:3px}
-/* PROGRESS */
 .pb{background:var(--bg3);border-radius:99px;overflow:hidden;height:6px}
 .pf{height:100%;border-radius:99px;transition:width .5s}
-/* TABS */
 .tabs{display:flex;gap:2px;border-bottom:1px solid var(--bd);margin-bottom:16px}
 .tab{padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;color:var(--tx2);background:transparent;border-top:none;border-left:none;border-right:none;font-family:inherit;transition:all .15s}
 .tab:hover{color:var(--tx)}.tab.active{color:var(--ac2);border-bottom-color:var(--ac)}
-/* QUIZ OPTIONS */
-.opt{display:flex;align-items:center;gap:10px;width:100%;padding:13px 14px;margin-bottom:9px;background:var(--bg3);border:2px solid var(--bd2);border-radius:8px;cursor:pointer;font-family:inherit;font-size:13.5px;color:var(--tx);text-align:left;transition:all .15s;font-weight:500}
-.opt:hover:not(:disabled){border-color:var(--ac);background:rgba(79,142,247,.06)}
-.opt.cor{border-color:var(--gr)!important;background:rgba(52,212,138,.1)!important}
-.opt.wrg{border-color:var(--rd)!important;background:rgba(247,88,88,.1)!important}
-.opt.sel2{border-color:var(--ac);background:rgba(79,142,247,.1)}
-.opt:disabled{cursor:default}
-.ol{width:28px;height:28px;border-radius:6px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
-/* MISC */
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px;flex-wrap:wrap}
 .st{font-size:18px;font-weight:700;letter-spacing:-.3px}
 .ss{font-size:13px;color:var(--tx2);margin-top:2px}
-.divider{border:none;border-top:1px solid var(--bd);margin:16px 0}
 .err-box{color:var(--rd);font-size:12px;margin-top:8px;padding:10px 12px;background:rgba(247,88,88,.08);border-radius:8px;font-family:monospace;white-space:pre-wrap;word-break:break-all;max-height:150px;overflow-y:auto}
 .dz{border:2px dashed var(--bd2);border-radius:12px;padding:32px 18px;text-align:center;cursor:pointer;background:var(--bg3);transition:all .15s}
 .dz:hover,.dz.over{border-color:var(--ac);background:rgba(79,142,247,.05)}
-.empty{text-align:center;padding:48px 20px;color:var(--tx2)}
-.empty-i{font-size:44px;margin-bottom:12px;opacity:.5}
-.empty-t{font-size:16px;font-weight:600;color:var(--tx);margin-bottom:7px}
-.empty-d{font-size:13px;line-height:1.6;margin-bottom:16px}
-.mc{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:16px 18px;cursor:pointer;transition:all .15s;margin-bottom:8px}
-.mc:hover{border-color:var(--ac);transform:translateY(-1px)}
-.mc.mcs{border-color:var(--ac);background:rgba(79,142,247,.04)}
-.tog{display:flex;gap:3px;background:var(--bg3);padding:3px;border-radius:8px;display:inline-flex}
+.mc{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:16px 18px;transition:all .15s;margin-bottom:8px}
+.mc:hover{border-color:var(--ac)}
+.tog{display:inline-flex;gap:3px;background:var(--bg3);padding:3px;border-radius:8px}
 .tog-b{padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .15s;background:transparent;color:var(--tx2)}
 .tog-b.active{background:var(--bg2);color:var(--tx);box-shadow:0 1px 4px rgba(0,0,0,.2)}
 .rc{padding:7px 14px;border-radius:8px;border:2px solid var(--bd2);cursor:pointer;font-size:12.5px;font-weight:600;transition:all .15s;background:var(--bg3);color:var(--tx2);user-select:none}
 .rc:hover{border-color:var(--ac);color:var(--tx)}.rc.active{border-color:var(--ac);background:rgba(79,142,247,.1);color:var(--ac2)}
 .mb-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid var(--bd);background:transparent;color:var(--tx);cursor:pointer;font-size:18px;flex-shrink:0}
-.score-ring{width:110px;height:110px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:4px solid;flex-shrink:0}
-.rv{border:1px solid var(--bd);border-radius:12px;padding:16px 18px;margin-bottom:10px}
-.rv.vc{border-left:3px solid var(--gr)}.rv.vw{border-left:3px solid var(--rd)}
-.ai-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:var(--bg3);margin-bottom:7px}
-.spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--bd2);border-top-color:var(--ac);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--bd2);border-top-color:var(--ac);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:5px}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* OVERLAY */
-#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;backdrop-filter:blur(2px)}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99}
 @media(max-width:768px){
   .sb{position:fixed;top:0;bottom:0;left:0;transform:translateX(-100%)}
   .sb.open{transform:translateX(0)}
@@ -132,7 +101,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="sb" id="sidebar">
     <div class="sb-logo"><div class="sb-icon">🎯</div>Quiz Coach</div>
     <nav class="sb-nav" id="nav"></nav>
-    <div class="sb-foot">Training Quiz Coach v1.0</div>
+    <div class="sb-foot">Training Quiz Coach · Coach</div>
   </div>
   <div class="main">
     <div class="topbar">
@@ -143,29 +112,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="content" id="content"></div>
   </div>
 </div>
-
 <script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+var SCRIPT_URL = '';
+
 // ── STATE ─────────────────────────────────────────────────────────────────────
 var state = {
   page: 'overview',
   theme: 'dark',
   modules: [],
-  sessions: [],
   passMark: 75,
-  activeQuiz: null,
   activeModuleIdx: null,
 };
-
-// ── HELPERS ───────────────────────────────────────────────────────────────────
 
 var insightsState = { results: [], loading: false, loaded: false, err: '' };
 
 // ── PERSISTENCE ───────────────────────────────────────────────────────────────
 function saveState(){
   try{
-    localStorage.setItem('qc_creator', JSON.stringify({
+    localStorage.setItem('qc_creator_v2', JSON.stringify({
       modules: state.modules,
-      sessions: state.sessions,
       passMark: state.passMark,
       theme: state.theme,
     }));
@@ -174,65 +140,34 @@ function saveState(){
 
 function loadState(){
   try{
-    var d=localStorage.getItem('qc_creator');
+    var su = localStorage.getItem('qc_script_url');
+    if(su) SCRIPT_URL = su;
+    var d = localStorage.getItem('qc_creator_v2');
     if(d){
-      var p=JSON.parse(d);
-      state.modules=p.modules||[];
-      state.sessions=p.sessions||[];
-      state.passMark=p.passMark||75;
-      state.theme=p.theme||'dark';
+      var p = JSON.parse(d);
+      state.modules = p.modules || [];
+      state.passMark = p.passMark || 75;
+      state.theme = p.theme || 'dark';
     }
   }catch(e){}
 }
 
+// ── HELPERS ───────────────────────────────────────────────────────────────────
 function uid(){ return Math.random().toString(36).slice(2,9); }
 function nowISO(){ return new Date().toISOString(); }
 function fmtDate(iso){ return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
 function pct(n,d){ return d===0?0:Math.round(n/d*100); }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-function topicPerf(sessions){
-  var m={};
-  sessions.forEach(function(s){
-    Object.keys(s.topicBreakdown||{}).forEach(function(t){
-      var d=s.topicBreakdown[t];
-      if(!m[t])m[t]={c:0,n:0};
-      m[t].c+=d.correct; m[t].n+=d.total;
-    });
-  });
-  var r={};
-  Object.keys(m).forEach(function(t){ r[t]={avg:pct(m[t].c,m[t].n)}; });
-  return r;
-}
-
-function studyStreak(sessions){
-  if(!sessions.length)return 0;
-  var days={};
-  sessions.forEach(function(s){ days[s.date.slice(0,10)]=true; });
-  var n=0, d=new Date();
-  while(days[d.toISOString().slice(0,10)]){ n++; d.setDate(d.getDate()-1); }
-  return n;
-}
-
-function exportCSV(sessions){
-  var rows=[['Date','Module','Score','Result','Total','Correct']];
-  sessions.forEach(function(s){
-    rows.push([fmtDate(s.date),s.moduleName,s.score+'%',s.passed?'Pass':'Fail',s.totalQuestions,s.correctCount]);
-  });
-  var csv=rows.map(function(r){return r.join(',');}).join('\n');
-  var a=document.createElement('a');
-  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
-  a.download='results.csv'; a.click();
-}
+function uniqueArr(arr){ var seen={},out=[]; arr.forEach(function(v){if(!seen[v]){seen[v]=1;out.push(v);}}); return out; }
 
 // ── CSV PARSER ────────────────────────────────────────────────────────────────
 function parseCSVLine(line){
   var cols=[],cur='',inQ=false;
   for(var i=0;i<line.length;i++){
     var c=line[i];
-    if(c==='"'){ if(inQ&&line[i+1]==='"'){cur+='"';i++;} else{inQ=!inQ;} }
-    else if(c===','&&!inQ){ cols.push(cur); cur=''; }
-    else{ cur+=c; }
+    if(c==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else{inQ=!inQ;}}
+    else if(c===','&&!inQ){cols.push(cur);cur='';}
+    else{cur+=c;}
   }
   cols.push(cur);
   return cols.map(function(c){return c.trim().replace(/^"|"$/g,'');});
@@ -249,8 +184,7 @@ function parseCSVFile(text){
   var dIdx=hi.findIndex(function(h){return h==='option d'||h==='d';});
   var corrIdx=hi.findIndex(function(h){return h.includes('correct answer letter')||h==='correct answer'||h==='answer';});
   var chapIdx=hi.findIndex(function(h){return h.includes('chapter')||h.includes('topic')||h.includes('category');});
-  if(qIdx===-1||aIdx===-1||corrIdx===-1)
-    return {error:'Could not find columns. Found: '+header.join(', ')};
+  if(qIdx===-1||aIdx===-1||corrIdx===-1) return {error:'Could not find columns. Found: '+header.join(', ')};
   var results=[];
   var optMap={A:0,B:1,C:2,D:3};
   for(var li=1;li<lines.length;li++){
@@ -262,7 +196,7 @@ function parseCSVFile(text){
     var ci=optMap[corrLetter];
     if(ci===undefined)continue;
     results.push({
-      id:uid(), text:q.trim(),
+      id:uid(),text:q.trim(),
       options:[(cols[aIdx]||'').trim(),(cols[bIdx]||'').trim(),(cols[cIdx]||'').trim(),(cols[dIdx]||'').trim()],
       correctIndex:ci,
       explanation:'Correct answer: '+corrLetter,
@@ -275,15 +209,14 @@ function parseCSVFile(text){
 
 // ── ROUTING ───────────────────────────────────────────────────────────────────
 var NAV=[
-  {id:'overview',icon:'⬡',label:'Overview'},
-  {id:'modules',icon:'📁',label:'Modules'},
-  {id:'insights',icon:'👥',label:'Student Insights'},
-  {id:'settings',icon:'⚙',label:'Settings'},
+  {id:'overview', icon:'⬡', label:'Overview'},
+  {id:'modules',  icon:'📁', label:'Modules'},
+  {id:'insights', icon:'👥', label:'Student Insights'},
+  {id:'settings', icon:'⚙', label:'Settings'},
 ];
 
 function navigate(page){
   state.page=page;
-  state.activeQuiz=null;
   state.activeModuleIdx=null;
   renderNav();
   renderPage();
@@ -293,22 +226,24 @@ function navigate(page){
 function renderNav(){
   var html='<div class="nav-lbl">Navigation</div>';
   NAV.forEach(function(item){
-    var active=state.page===item.id&&!state.activeQuiz?'active':'';
+    var active=(state.page===item.id&&state.activeModuleIdx===null)?'active':'';
     html+='<div class="ni '+active+'" onclick="navigate(\''+item.id+'\')"><span>'+item.icon+'</span>'+item.label+'</div>';
   });
   document.getElementById('nav').innerHTML=html;
-  var label=state.activeQuiz?'Quiz in Progress':state.activeModuleIdx!==null&&state.page==='modules'?(state.modules[state.activeModuleIdx]||{}).name||'Module Detail':(NAV.find(function(n){return n.id===state.page;})||{}).label||'';
+  var label=state.activeModuleIdx!==null
+    ?((state.modules[state.activeModuleIdx]||{}).name||'Module')
+    :(NAV.find(function(n){return n.id===state.page;})||{}).label||'';
   document.getElementById('page-title').textContent=label;
 }
 
 function renderPage(){
   var el=document.getElementById('content');
-  if(state.activeQuiz){ el.innerHTML=renderQuiz(); bindQuiz(); return; }
+  if(state.activeModuleIdx!==null){el.innerHTML=renderModuleDetail();bindModuleDetail();return;}
   switch(state.page){
     case 'overview': el.innerHTML=renderOverview(); break;
-    case 'modules': if(state.activeModuleIdx!==null){el.innerHTML=renderModuleDetail(); bindModuleDetail();}else{el.innerHTML=renderModules(); bindModules();} break;
+    case 'modules':  el.innerHTML=renderModules(); bindModules(); break;
     case 'insights': el.innerHTML=renderInsights(); break;
-    case 'settings': el.innerHTML=renderSettings(); bindSettings(); break;
+    case 'settings': el.innerHTML=renderSettings(); break;
   }
 }
 
@@ -317,7 +252,7 @@ function renderOverview(){
   var m=state.modules;
   var sr=insightsState.results;
   var pm=state.passMark;
-  var students=Array.from(new Set(sr.map(function(r){return r.studentName;})));
+  var students=uniqueArr(sr.map(function(r){return r.studentName;}));
   var passRate=sr.length?pct(sr.filter(function(r){return r.passed==='true'||r.passed===true;}).length,sr.length):0;
   var totalQs=sr.reduce(function(a,r){return a+Number(r.totalQuestions||0);},0);
 
@@ -328,7 +263,7 @@ function renderOverview(){
   });
   html+='</div>';
   if(!m.length){
-    html+='<div class="card"><div class="empty"><div class="empty-i">📚</div><div class="empty-t">No modules yet</div><div class="empty-d">Go to Modules to add your question bank.</div><button class="btn btn-p" onclick="navigate('modules')">Add First Module</button></div></div>';
+    html+='<div class="card"><div style="text-align:center;padding:32px 20px"><div style="font-size:44px;margin-bottom:12px">📚</div><div style="font-size:16px;font-weight:600;margin-bottom:7px">No modules yet</div><div style="font-size:13px;color:var(--tx2);margin-bottom:16px">Go to Modules to add your question bank.</div><button class="btn btn-p" onclick="navigate(\'modules\')">Add First Module</button></div></div>';
   } else {
     html+='<div class="g2" style="margin-bottom:0">';
     html+='<div class="card" style="margin-bottom:0"><div class="ct">Modules</div>';
@@ -342,7 +277,7 @@ function renderOverview(){
     html+='</div>';
     html+='<div class="card" style="margin-bottom:0"><div class="ct">Recent Results</div>';
     if(!sr.length){
-      html+='<div style="color:var(--tx3);font-size:13px;text-align:center;padding:20px 0">No student results yet.<br><span style="font-size:11px">Results appear here once students complete quizzes.</span></div>';
+      html+='<div style="color:var(--tx3);font-size:13px;text-align:center;padding:20px 0">No student results yet.<br><span style="font-size:11px">Results appear once students complete quizzes.</span></div>';
     } else {
       sr.slice(-5).reverse().forEach(function(r){
         var passed=r.passed==='true'||r.passed===true;
@@ -354,92 +289,96 @@ function renderOverview(){
         html+='</div>';
       });
     }
-    html+='<button class="btn btn-s btn-sm" style="margin-top:8px;width:100%;justify-content:center" onclick="navigate('insights')">View All Insights →</button>';
+    html+='<button class="btn btn-s btn-sm" style="margin-top:8px;width:100%;justify-content:center" onclick="navigate(\'insights\')">View All Insights →</button>';
     html+='</div></div>';
   }
   return html;
 }
-
 
 // ── MODULES ───────────────────────────────────────────────────────────────────
 var modState={tab:'csv',name:'',category:'',questions:[],err:'',qText:'',opts:['','','',''],correct:0,explain:'',topic:'',diff:'medium',editIdx:null};
 
 function renderModules(){
   var ms=state.modules;
-  var html='<div class="sh"><div><div class="st">Training Modules</div><div class="ss">Import CSV or add questions manually</div></div></div>';
-  // Publish bar at top of modules
+  var html='<div class="sh"><div><div class="st">Training Modules</div><div class="ss">Manage your question banks</div></div></div>';
+
+  // Publish bar
   html+='<div style="background:linear-gradient(135deg,rgba(79,142,247,.1),rgba(167,139,250,.1));border:1px solid rgba(79,142,247,.25);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">';
   html+='<div><div style="font-size:13px;font-weight:600;margin-bottom:2px">📡 Publish to Students</div>';
-  html+='<div style="font-size:11px;color:var(--tx2)">'+ms.length+' module(s) ready · Download modules.json then upload to GitHub</div></div>';
+  html+='<div style="font-size:11px;color:var(--tx2)">'+ms.length+' module(s) · Download modules.json then upload to GitHub</div></div>';
   html+='<button class="btn btn-p btn-sm" onclick="publishModules()"'+(ms.length?'':' disabled')+'>⬆ Publish All Modules</button>';
   html+='</div>';
+
+  // Saved modules grouped by category
   if(ms.length){
-    // Group modules by category
     var cats={};
     ms.forEach(function(m,i){
       var c=m.category||'Uncategorised';
       if(!cats[c])cats[c]=[];
       cats[c].push({m:m,i:i});
     });
-    Object.keys(cats).sort().forEach(function(cat){
+    var catKeys=Object.keys(cats).sort();
+    catKeys.forEach(function(cat){
       html+='<div style="margin-bottom:18px">';
-      html+='<div style="font-size:11px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:7px">';
-      html+='<span>📂</span><span>'+esc(cat)+'</span><span style="color:var(--bd2)">·</span><span>'+cats[cat].length+' module(s)</span></div>';
+      html+='<div style="font-size:11px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">📂 '+esc(cat)+' · '+cats[cat].length+' module(s)</div>';
       html+='<div class="g3">';
       cats[cat].forEach(function(x){
         var m=x.m,i=x.i;
         html+='<div class="mc" style="margin-bottom:0">';
         html+='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px">';
-        html+='<div style="font-size:15px">📗</div>';
+        html+='<span style="font-size:15px">📗</span>';
         html+='<div style="display:flex;gap:4px">';
-        html+='<button class="btn btn-sm" style="background:rgba(79,142,247,.1);color:var(--ac2);border:1px solid rgba(79,142,247,.2);padding:3px 8px;font-size:11px" onclick="event.stopPropagation();renameModule('+i+')" title="Rename">✏️</button>';
-        html+='<button class="btn btn-sm" style="background:rgba(247,88,88,.08);color:var(--rd);border:1px solid rgba(247,88,88,.2);padding:3px 8px;font-size:11px" onclick="event.stopPropagation();deleteModule('+i+')" title="Delete">🗑</button>';
+        html+='<button class="btn btn-sm" style="background:rgba(79,142,247,.1);color:var(--ac2);border:1px solid rgba(79,142,247,.2);padding:3px 8px;font-size:11px" onclick="renameModule('+i+')">✏️</button>';
+        html+='<button class="btn btn-sm" style="background:rgba(247,88,88,.08);color:var(--rd);border:1px solid rgba(247,88,88,.2);padding:3px 8px;font-size:11px" onclick="deleteModule('+i+')">🗑</button>';
         html+='</div></div>';
         html+='<div style="font-size:13px;font-weight:700;margin-bottom:3px">'+esc(m.name)+'</div>';
         html+='<div style="font-size:11px;color:var(--tx2);margin-bottom:9px">'+m.questions.length+' questions</div>';
+        var topicBadges=m.topics.slice(0,3);
         html+='<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">';
-        m.topics.slice(0,3).forEach(function(t){html+='<span class="badge b-topic">'+esc(t)+'</span>';});
+        topicBadges.forEach(function(t){html+='<span class="badge b-topic">'+esc(t)+'</span>';});
         html+='</div>';
-        html+='<div style="display:flex;gap:6px;margin-top:4px">';
-        html+='<button class="btn btn-p btn-sm" onclick="event.stopPropagation();selectModule('+i+')">▶ Quiz</button>';
-        html+='<button class="btn btn-s btn-sm" onclick="event.stopPropagation();openModuleDetail('+i+')">👁 View</button>';
+        html+='<div style="display:flex;gap:6px">';
+        html+='<button class="btn btn-s btn-sm" onclick="openModuleDetail('+i+')">👁 View</button>';
         html+='</div>';
         html+='</div>';
       });
       html+='</div></div>';
     });
   }
+
+  // New module form
   html+='<div class="card" style="margin-bottom:14px"><div class="ct">New Module</div>';
   html+='<div class="g2" style="margin-bottom:10px">';
   html+='<div><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:5px">Module Name</label>';
-  html+='<input class="inp" id="mod-name" placeholder="e.g. Legacy 500, Fire Safety..." value="'+esc(modState.name)+'"></div>';
+  html+='<input class="inp" id="mod-name" placeholder="e.g. Legacy 500..." value="'+esc(modState.name)+'"></div>';
   html+='<div><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:5px">Category (optional)</label>';
   html+='<input class="inp" id="mod-category" placeholder="e.g. Systems, Procedures..." value="'+esc(modState.category)+'"></div>';
   html+='</div>';
-  if(modState.err) html+='<div class="err-box" style="margin-top:8px">'+esc(modState.err)+'</div>';
+  if(modState.err) html+='<div class="err-box">'+esc(modState.err)+'</div>';
   html+='</div>';
+
+  // Import tabs
   html+='<div class="card"><div class="tabs">';
-  [{id:'csv',label:'📄 Import CSV'},{id:'manual',label:'✏️ Manual Entry'}].forEach(function(t){
-    html+='<button class="tab'+(modState.tab===t.id?' active':'')+'" onclick="switchModTab(\''+t.id+'\')">'+t.label+'</button>';
-  });
+  html+='<button class="tab'+(modState.tab==='csv'?' active':'')+'" onclick="switchModTab(\'csv\')">📄 Import CSV</button>';
+  html+='<button class="tab'+(modState.tab==='manual'?' active':'')+'" onclick="switchModTab(\'manual\')">✏️ Manual Entry</button>';
   html+='</div>';
+
   if(modState.tab==='csv'){
-    html+='<div style="font-size:12px;color:var(--tx2);margin-bottom:12px;line-height:1.6">Upload a CSV with columns: <strong style="color:var(--tx)">Question, Option A, Option B, Option C, Option D, Correct Answer Letter, Chapter</strong></div>';
+    html+='<div style="font-size:12px;color:var(--tx2);margin-bottom:12px;line-height:1.6">CSV columns: <strong style="color:var(--tx)">Question, Option A, Option B, Option C, Option D, Correct Answer Letter, Chapter</strong></div>';
     html+='<div class="dz" id="dropzone" onclick="document.getElementById(\'csv-file\').click()">';
     html+='<div style="font-size:32px;margin-bottom:9px">📄</div>';
-    html+='<div style="font-size:13px;font-weight:600;margin-bottom:5px">Drop CSV file or tap to browse</div>';
+    html+='<div style="font-size:13px;font-weight:600;margin-bottom:5px">Drop CSV or tap to browse</div>';
     html+='<div style="font-size:11px;color:var(--tx3)">.csv files only</div>';
     html+='<input type="file" id="csv-file" accept=".csv" style="display:none">';
     html+='</div>';
     if(modState.questions.length){
-      html+='<div style="margin-top:10px;padding:11px 13px;background:rgba(52,212,138,.08);border:1px solid rgba(52,212,138,.25);border-radius:8px;font-size:13px">✅ <strong>'+modState.questions.length+' questions</strong> loaded across <strong>'+Array.from(new Set(modState.questions.map(function(q){return q.topic;}))).length+'</strong> topics.</div>';
+      html+='<div style="margin-top:10px;padding:11px 13px;background:rgba(52,212,138,.08);border:1px solid rgba(52,212,138,.25);border-radius:8px;font-size:13px">✅ <strong>'+modState.questions.length+' questions</strong> loaded across <strong>'+uniqueArr(modState.questions.map(function(q){return q.topic;})).length+'</strong> topics.</div>';
     }
   } else {
-    // Manual entry form
     var L=['A','B','C','D'];
-    html+='<div style="margin-bottom:11px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:5px">'+(modState.editIdx!==null?'Editing Question '+(modState.editIdx+1):'Question Text')+'</label>';
-    html+='<textarea class="ta" id="q-text" style="min-height:70px" placeholder="Enter your question...">'+esc(modState.qText)+'</textarea></div>';
-    html+='<div style="margin-bottom:11px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:7px">Options — tap letter to mark correct answer</label>';
+    html+='<div style="margin-bottom:10px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:5px">'+(modState.editIdx!==null?'Editing Q'+(modState.editIdx+1):'Question Text')+'</label>';
+    html+='<textarea class="ta" id="q-text" style="min-height:70px" placeholder="Enter question...">'+esc(modState.qText)+'</textarea></div>';
+    html+='<div style="margin-bottom:10px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:6px">Options — tap letter to mark correct</label>';
     for(var i=0;i<4;i++){
       var bc=modState.correct===i?'var(--gr)':'var(--bd2)';
       var bg=modState.correct===i?'rgba(52,212,138,.15)':'var(--bg4)';
@@ -450,11 +389,11 @@ function renderModules(){
       html+='</div>';
     }
     html+='<div style="font-size:11px;color:var(--gr);margin-top:2px">✓ Option '+L[modState.correct]+' is correct</div></div>';
-    html+='<div class="g2" style="margin-bottom:11px">';
+    html+='<div class="g2" style="margin-bottom:10px">';
     html+='<div><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:5px">Topic</label><input class="inp" id="q-topic" placeholder="e.g. Airplane General" value="'+esc(modState.topic)+'"></div>';
     html+='<div><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:5px">Difficulty</label><select class="sel" id="q-diff"><option value="easy"'+(modState.diff==='easy'?' selected':'')+'>Easy</option><option value="medium"'+(modState.diff==='medium'?' selected':'')+'>Medium</option><option value="hard"'+(modState.diff==='hard'?' selected':'')+'>Hard</option></select></div>';
     html+='</div>';
-    html+='<div style="margin-bottom:11px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:5px">Explanation (optional)</label>';
+    html+='<div style="margin-bottom:10px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:5px">Explanation (optional)</label>';
     html+='<input class="inp" id="q-explain" placeholder="Why is this correct?" value="'+esc(modState.explain)+'"></div>';
     html+='<div style="display:flex;gap:8px">';
     html+='<button class="btn btn-p" onclick="addQuestion()">'+(modState.editIdx!==null?'💾 Update':'+ Add Question')+'</button>';
@@ -462,8 +401,10 @@ function renderModules(){
     html+='</div>';
   }
   html+='</div>';
+
+  // Preview questions
   if(modState.questions.length){
-    html+='<div class="card"><div class="ct">Questions ('+modState.questions.length+')</div>';
+    html+='<div class="card"><div class="ct">Preview ('+modState.questions.length+' questions)</div>';
     html+='<div style="max-height:300px;overflow-y:auto">';
     modState.questions.forEach(function(q,i){
       html+='<div style="padding:10px 12px;background:var(--bg3);border-radius:8px;margin-bottom:6px">';
@@ -488,7 +429,7 @@ function renderModules(){
 
 function bindModules(){
   var f=document.getElementById('csv-file');
-  if(f) f.onchange=function(e){ loadCSV(e.target.files[0]); };
+  if(f) f.onchange=function(e){loadCSV(e.target.files[0]);};
   var dz=document.getElementById('dropzone');
   if(dz){
     dz.ondragover=function(e){e.preventDefault();dz.classList.add('over');};
@@ -504,16 +445,14 @@ function switchModTab(tab){
 }
 
 function saveModFormState(){
-  var n=document.getElementById('mod-name');
-  if(n) modState.name=n.value;
-  var nc=document.getElementById('mod-category');
-  if(nc) modState.category=nc.value;
+  var n=document.getElementById('mod-name'); if(n) modState.name=n.value;
+  var nc=document.getElementById('mod-category'); if(nc) modState.category=nc.value;
   if(modState.tab==='manual'){
     var qt=document.getElementById('q-text'); if(qt) modState.qText=qt.value;
     for(var i=0;i<4;i++){var o=document.getElementById('opt-'+i);if(o)modState.opts[i]=o.value;}
-    var tp=document.getElementById('q-topic');if(tp)modState.topic=tp.value;
-    var df=document.getElementById('q-diff');if(df)modState.diff=df.value;
-    var ex=document.getElementById('q-explain');if(ex)modState.explain=ex.value;
+    var tp=document.getElementById('q-topic'); if(tp) modState.topic=tp.value;
+    var df=document.getElementById('q-diff'); if(df) modState.diff=df.value;
+    var ex=document.getElementById('q-explain'); if(ex) modState.explain=ex.value;
   }
 }
 
@@ -533,7 +472,7 @@ function loadCSV(file){
   reader.readAsText(file);
 }
 
-function setCorrect(i){ saveModFormState(); modState.correct=i; renderPage(); }
+function setCorrect(i){saveModFormState();modState.correct=i;renderPage();}
 
 function addQuestion(){
   saveModFormState();
@@ -542,40 +481,38 @@ function addQuestion(){
   if(!modState.topic.trim()){modState.err='Topic required.';renderPage();return;}
   modState.err='';
   var q={id:uid(),text:modState.qText.trim(),options:modState.opts.map(function(o){return o.trim();}),correctIndex:modState.correct,explanation:modState.explain.trim(),topic:modState.topic.trim(),difficulty:modState.diff};
-  if(modState.editIdx!==null){ modState.questions[modState.editIdx]=q; modState.editIdx=null; }
-  else{ modState.questions.push(q); }
-  modState.qText=''; modState.opts=['','','','']; modState.correct=0; modState.explain=''; modState.topic=''; modState.diff='medium';
+  if(modState.editIdx!==null){modState.questions[modState.editIdx]=q;modState.editIdx=null;}
+  else{modState.questions.push(q);}
+  modState.qText='';modState.opts=['','','',''];modState.correct=0;modState.explain='';modState.topic='';modState.diff='medium';
   renderPage();
 }
 
-function cancelEdit(){ modState.editIdx=null; modState.qText=''; modState.opts=['','','','']; modState.correct=0; modState.explain=''; modState.topic=''; renderPage(); }
+function cancelEdit(){modState.editIdx=null;modState.qText='';modState.opts=['','','',''];modState.correct=0;modState.explain='';modState.topic='';renderPage();}
 
 function editQuestion(i){
   saveModFormState();
   var q=modState.questions[i];
-  modState.tab='manual'; modState.editIdx=i; modState.qText=q.text;
-  modState.opts=[...q.options]; modState.correct=q.correctIndex;
-  modState.explain=q.explanation; modState.topic=q.topic; modState.diff=q.difficulty;
+  modState.tab='manual';modState.editIdx=i;modState.qText=q.text;
+  modState.opts=q.options.slice();modState.correct=q.correctIndex;
+  modState.explain=q.explanation;modState.topic=q.topic;modState.diff=q.difficulty;
   renderPage();
 }
 
-function deleteQuestion(i){ modState.questions.splice(i,1); renderPage(); }
+function deleteQuestion(i){modState.questions.splice(i,1);renderPage();}
 
 function saveModule(){
   saveModFormState();
   if(!modState.name.trim()){modState.err='Module name required.';renderPage();return;}
   if(!modState.questions.length){modState.err='Add at least 1 question.';renderPage();return;}
-  var topics=Array.from(new Set(modState.questions.map(function(q){return q.topic;})));
+  var topics=uniqueArr(modState.questions.map(function(q){return q.topic;}));
   state.modules.push({id:uid(),name:modState.name.trim(),category:modState.category.trim(),topics:topics,questions:modState.questions.slice(),createdAt:nowISO()});
-  modState.name=''; modState.category=''; modState.questions=[]; modState.err=''; modState.qText=''; modState.opts=['','','','']; modState.topic='';
+  modState.name='';modState.category='';modState.questions=[];modState.err='';modState.qText='';modState.opts=['','','',''];modState.topic='';
   saveState();
   renderPage();
 }
 
-function selectModule(i){ state.setupModule=state.modules[i]; navigate('quiz'); }
-
 function deleteModule(i){
-  if(!confirm('Delete "'+state.modules[i].name+'"? This cannot be undone.')) return;
+  if(!confirm('Delete "'+state.modules[i].name+'"? This cannot be undone.'))return;
   state.modules.splice(i,1);
   saveState();
   renderPage();
@@ -586,13 +523,22 @@ function renameModule(i){
   var newName=prompt('Rename module:',m.name);
   if(newName&&newName.trim()){
     m.name=newName.trim();
-    var newCat=prompt('Category (leave blank to keep "'+( m.category||'Uncategorised')+'"):',m.category||'');
+    var newCat=prompt('Category (current: "'+(m.category||'Uncategorised')+'"):',m.category||'');
     if(newCat!==null) m.category=newCat.trim();
     saveState();
     renderPage();
   }
 }
 
+function publishModules(){
+  if(!state.modules.length){alert('No modules to publish.');return;}
+  var payload=JSON.stringify({version:nowISO(),modules:state.modules},null,2);
+  var a=document.createElement('a');
+  a.href='data:application/json;charset=utf-8,'+encodeURIComponent(payload);
+  a.download='modules.json';
+  a.click();
+  alert('modules.json downloaded!\n\nUpload it to the root of your Training-Quiz-Coach repo on GitHub.');
+}
 
 // ── MODULE DETAIL ─────────────────────────────────────────────────────────────
 var detailState={editIdx:null,qText:'',opts:['','','',''],correct:0,explain:'',topic:'',diff:'medium',filter:'',err:''};
@@ -606,7 +552,6 @@ function openModuleDetail(i){
 
 function closeModuleDetail(){
   state.activeModuleIdx=null;
-  detailState.editIdx=null;
   renderNav();
   renderPage();
 }
@@ -614,26 +559,20 @@ function closeModuleDetail(){
 function renderModuleDetail(){
   var mi=state.activeModuleIdx;
   var m=state.modules[mi];
-  if(!m) return '<div class="card"><div class="empty">Module not found.</div></div>';
+  if(!m)return '<div class="card">Module not found.</div>';
   var L=['A','B','C','D'];
   var qs=m.questions;
   var filtered=detailState.filter?qs.filter(function(q){
-    return q.text.toLowerCase().includes(detailState.filter.toLowerCase())||
-           q.topic.toLowerCase().includes(detailState.filter.toLowerCase());
+    return q.text.toLowerCase().indexOf(detailState.filter.toLowerCase())>=0||
+           q.topic.toLowerCase().indexOf(detailState.filter.toLowerCase())>=0;
   }):qs;
 
-  var html='';
-  // Header
-  html+='<div class="sh">';
+  var html='<div class="sh">';
   html+='<div style="display:flex;align-items:center;gap:10px">';
   html+='<button class="btn btn-s btn-sm" onclick="closeModuleDetail()">← Back</button>';
-  html+='<div><div class="st">'+esc(m.name)+'</div>';
-  html+='<div class="ss">'+qs.length+' questions · '+(m.category||'Uncategorised')+'</div></div>';
-  html+='</div>';
-  html+='<button class="btn btn-p btn-sm" onclick="selectModule('+mi+')">▶ Start Quiz</button>';
-  html+='</div>';
+  html+='<div><div class="st">'+esc(m.name)+'</div><div class="ss">'+qs.length+' questions · '+(m.category||'Uncategorised')+'</div></div>';
+  html+='</div></div>';
 
-  // Edit form (shown when editing)
   if(detailState.editIdx!==null){
     html+='<div class="card" style="border:1px solid rgba(79,142,247,.3);margin-bottom:14px">';
     html+='<div class="ct">Editing Question '+(detailState.editIdx+1)+'</div>';
@@ -641,45 +580,40 @@ function renderModuleDetail(){
     html+='<textarea class="ta" id="dq-text" style="min-height:65px">'+esc(detailState.qText)+'</textarea></div>';
     html+='<div style="margin-bottom:10px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:6px">Options</label>';
     for(var i=0;i<4;i++){
-      var bc=detailState.correct===i?'var(--gr)':'var(--bd2)';
-      var bg=detailState.correct===i?'rgba(52,212,138,.15)':'var(--bg4)';
-      var fc=detailState.correct===i?'var(--gr)':'var(--tx2)';
+      var bc2=detailState.correct===i?'var(--gr)':'var(--bd2)';
+      var bg2=detailState.correct===i?'rgba(52,212,138,.15)':'var(--bg4)';
+      var fc2=detailState.correct===i?'var(--gr)':'var(--tx2)';
       html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">';
-      html+='<button onclick="detailSetCorrect('+i+')" style="width:28px;height:28px;border-radius:6px;border:2px solid '+bc+';background:'+bg+';color:'+fc+';font-weight:700;font-size:12px;cursor:pointer;flex-shrink:0;font-family:inherit">'+L[i]+'</button>';
-      html+='<input class="inp" id="dopt-'+i+'" placeholder="Option '+L[i]+'..." value="'+esc(detailState.opts[i])+'">';
+      html+='<button onclick="detailSetCorrect('+i+')" style="width:28px;height:28px;border-radius:6px;border:2px solid '+bc2+';background:'+bg2+';color:'+fc2+';font-weight:700;font-size:12px;cursor:pointer;flex-shrink:0;font-family:inherit">'+L[i]+'</button>';
+      html+='<input class="inp" id="dopt-'+i+'" value="'+esc(detailState.opts[i])+'">';
       html+='</div>';
     }
     html+='<div style="font-size:11px;color:var(--gr);margin-top:2px">✓ Option '+L[detailState.correct]+' is correct</div></div>';
     html+='<div class="g2" style="margin-bottom:10px">';
-    html+='<div><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:4px">Topic</label>';
-    html+='<input class="inp" id="dq-topic" value="'+esc(detailState.topic)+'"></div>';
+    html+='<div><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:4px">Topic</label><input class="inp" id="dq-topic" value="'+esc(detailState.topic)+'"></div>';
     html+='<div><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:4px">Difficulty</label>';
     html+='<select class="sel" id="dq-diff"><option value="easy"'+(detailState.diff==='easy'?' selected':'')+'>Easy</option><option value="medium"'+(detailState.diff==='medium'?' selected':'')+'>Medium</option><option value="hard"'+(detailState.diff==='hard'?' selected':'')+'>Hard</option></select></div>';
     html+='</div>';
-    html+='<div style="margin-bottom:10px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:4px">Explanation</label>';
-    html+='<input class="inp" id="dq-explain" value="'+esc(detailState.explain)+'"></div>';
+    html+='<div style="margin-bottom:10px"><label style="font-size:11px;color:var(--tx2);font-weight:600;display:block;margin-bottom:4px">Explanation</label><input class="inp" id="dq-explain" value="'+esc(detailState.explain)+'"></div>';
     if(detailState.err) html+='<div class="err-box">'+esc(detailState.err)+'</div>';
     html+='<div style="display:flex;gap:8px;margin-top:10px">';
-    html+='<button class="btn btn-p" onclick="detailSaveQuestion()">💾 Save Changes</button>';
+    html+='<button class="btn btn-p" onclick="detailSaveQuestion()">💾 Save</button>';
     html+='<button class="btn btn-s" onclick="detailCancelEdit()">Cancel</button>';
     html+='</div></div>';
   }
 
-  // Search/filter
   html+='<div style="display:flex;gap:8px;margin-bottom:14px;align-items:center">';
   html+='<input class="inp" id="detail-filter" placeholder="🔍 Search questions or topics..." value="'+esc(detailState.filter)+'" oninput="detailFilter(this.value)">';
   html+='<span style="font-size:11px;color:var(--tx3);white-space:nowrap">'+filtered.length+'/'+qs.length+'</span>';
   html+='</div>';
 
-  // Questions list
   html+='<div class="card"><div class="ct">Questions</div>';
   if(!filtered.length){
-    html+='<div style="color:var(--tx3);font-size:13px;text-align:center;padding:20px 0">No questions match your search.</div>';
+    html+='<div style="color:var(--tx3);font-size:13px;text-align:center;padding:20px 0">No questions match.</div>';
   } else {
     filtered.forEach(function(q){
       var qi=qs.indexOf(q);
-      var isEditing=detailState.editIdx===qi;
-      html+='<div style="padding:12px 14px;background:'+(isEditing?'rgba(79,142,247,.06)':'var(--bg3)')+';border-radius:8px;margin-bottom:8px;border:1px solid '+(isEditing?'rgba(79,142,247,.3)':'transparent')+'">';
+      html+='<div style="padding:12px 14px;background:var(--bg3);border-radius:8px;margin-bottom:8px">';
       html+='<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">';
       html+='<div style="flex:1">';
       html+='<div style="display:flex;gap:5px;margin-bottom:5px;flex-wrap:wrap">';
@@ -690,8 +624,8 @@ function renderModuleDetail(){
       html+='<div style="font-size:13px;font-weight:500;line-height:1.5;margin-bottom:7px">'+esc(q.text)+'</div>';
       html+='<div style="display:flex;gap:5px;flex-wrap:wrap">';
       q.options.forEach(function(opt,oi){
-        var isCorrect=oi===q.correctIndex;
-        html+='<span style="font-size:11px;padding:2px 8px;border-radius:5px;background:'+(isCorrect?'rgba(52,212,138,.12)':'var(--bg4)')+';color:'+(isCorrect?'var(--gr)':'var(--tx3)')+';border:1px solid '+(isCorrect?'rgba(52,212,138,.3)':'transparent')+'">';
+        var isC=oi===q.correctIndex;
+        html+='<span style="font-size:11px;padding:2px 8px;border-radius:5px;background:'+(isC?'rgba(52,212,138,.12)':'var(--bg4)')+';color:'+(isC?'var(--gr)':'var(--tx3)')+';border:1px solid '+(isC?'rgba(52,212,138,.3)':'transparent')+'">';
         html+=L[oi]+'. '+esc(opt)+'</span>';
       });
       html+='</div>';
@@ -707,38 +641,32 @@ function renderModuleDetail(){
   return html;
 }
 
-function bindModuleDetail(){
-  // filter input already uses oninput inline
-}
+function bindModuleDetail(){}
 
-function detailFilter(v){
-  detailState.filter=v;
-  renderPage();
-}
+function detailFilter(v){detailState.filter=v;renderPage();}
 
 function detailSaveFormState(){
   var qt=document.getElementById('dq-text'); if(qt) detailState.qText=qt.value;
   for(var i=0;i<4;i++){var o=document.getElementById('dopt-'+i);if(o)detailState.opts[i]=o.value;}
-  var tp=document.getElementById('dq-topic');if(tp)detailState.topic=tp.value;
-  var df=document.getElementById('dq-diff');if(df)detailState.diff=df.value;
-  var ex=document.getElementById('dq-explain');if(ex)detailState.explain=ex.value;
+  var tp=document.getElementById('dq-topic'); if(tp) detailState.topic=tp.value;
+  var df=document.getElementById('dq-diff'); if(df) detailState.diff=df.value;
+  var ex=document.getElementById('dq-explain'); if(ex) detailState.explain=ex.value;
 }
 
-function detailSetCorrect(i){ detailSaveFormState(); detailState.correct=i; renderPage(); }
+function detailSetCorrect(i){detailSaveFormState();detailState.correct=i;renderPage();}
 
 function detailEditQuestion(i){
   var m=state.modules[state.activeModuleIdx];
   var q=m.questions[i];
   detailState.editIdx=i;
   detailState.qText=q.text;
-  detailState.opts=[...q.options];
+  detailState.opts=q.options.slice();
   detailState.correct=q.correctIndex;
   detailState.explain=q.explanation||'';
   detailState.topic=q.topic;
   detailState.diff=q.difficulty;
   detailState.err='';
   renderPage();
-  // Scroll to top
   document.getElementById('content').scrollTop=0;
 }
 
@@ -757,426 +685,37 @@ function detailSaveQuestion(){
     topic:detailState.topic.trim(),
     difficulty:detailState.diff
   };
-  m.topics=Array.from(new Set(m.questions.map(function(q){return q.topic;})));
+  m.topics=uniqueArr(m.questions.map(function(q){return q.topic;}));
   detailState.editIdx=null;
-  detailState.qText=''; detailState.opts=['','','','']; detailState.correct=0; detailState.explain=''; detailState.topic=''; detailState.err='';
+  detailState.qText='';detailState.opts=['','','',''];detailState.correct=0;detailState.explain='';detailState.topic='';detailState.err='';
   saveState();
   renderPage();
 }
 
-function detailCancelEdit(){
-  detailState.editIdx=null;
-  detailState.err='';
-  renderPage();
-}
+function detailCancelEdit(){detailState.editIdx=null;detailState.err='';renderPage();}
 
 function detailDeleteQuestion(i){
-  if(!confirm('Delete this question?')) return;
+  if(!confirm('Delete this question?'))return;
   var m=state.modules[state.activeModuleIdx];
   m.questions.splice(i,1);
-  m.topics=Array.from(new Set(m.questions.map(function(q){return q.topic;})));
+  m.topics=uniqueArr(m.questions.map(function(q){return q.topic;}));
   saveState();
   renderPage();
 }
-
-// ── QUIZ SETUP ────────────────────────────────────────────────────────────────
-var setupState={modIdx:-1,topics:[],qCount:10,customCount:'',diff:'all',timed:false,mins:10,feedback:'end'};
-
-function renderSetup(){
-  if(!state.modules.length) return '<div class="card"><div class="empty"><div class="empty-i">📁</div><div class="empty-t">No modules yet</div><div class="empty-d">Create a module first.</div></div></div>';
-  if(state.setupModule){ setupState.modIdx=state.modules.indexOf(state.setupModule); state.setupModule=null; }
-  var sm=setupState.modIdx>=0?state.modules[setupState.modIdx]:null;
-  var fqs=sm?sm.questions.filter(function(q){
-    var tOk=!setupState.topics.length||setupState.topics.includes(q.topic);
-    var dOk=setupState.diff==='all'||q.difficulty===setupState.diff;
-    return tOk&&dOk;
-  }):[];
-  var fc=setupState.customCount?Math.min(parseInt(setupState.customCount)||5,fqs.length):Math.min(setupState.qCount,fqs.length);
-  var html='<div class="sh"><div><div class="st">Start Quiz</div><div class="ss">Configure your session</div></div></div>';
-  html+='<div class="card"><div class="ct">1 · Select Module</div>';
-  state.modules.forEach(function(m,i){
-    var sel=setupState.modIdx===i?'mcs':'';
-    html+='<div class="mc '+sel+'" onclick="selectSetupMod('+i+')" style="margin-bottom:8px">';
-    html+='<div style="display:flex;justify-content:space-between;align-items:center">';
-    html+='<div><div style="font-size:13px;font-weight:600">'+esc(m.name)+'</div><div style="font-size:11px;color:var(--tx2)">'+m.questions.length+' questions</div></div>';
-    if(setupState.modIdx===i) html+='<span style="color:var(--ac);font-size:18px">✓</span>';
-    html+='</div></div>';
-  });
-  html+='</div>';
-  if(sm&&sm.topics.length){
-    html+='<div class="card"><div class="ct">2 · Topics (optional — empty = all)</div><div style="display:flex;gap:7px;flex-wrap:wrap">';
-    sm.topics.forEach(function(t){
-      var act=setupState.topics.includes(t)?'active':'';
-      html+='<div class="rc '+act+'" onclick="toggleTopic(\''+esc(t)+'\')">'+esc(t)+'</div>';
-    });
-    html+='</div></div>';
-  }
-  html+='<div class="card"><div class="ct">3 · Number of Questions</div>';
-  html+='<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px">';
-  [5,10,20,30].forEach(function(n){
-    var act=setupState.qCount===n&&!setupState.customCount?'active':'';
-    html+='<div class="rc '+act+'" onclick="setQCount('+n+')">'+n+'</div>';
-  });
-  html+='</div>';
-  html+='<div style="display:flex;gap:8px;align-items:center">';
-  html+='<input class="inp" id="custom-count" style="width:90px" type="number" placeholder="Custom" value="'+esc(setupState.customCount)+'">';
-  if(fqs.length) html+='<span style="font-size:11px;color:var(--tx3)">('+fqs.length+' available)</span>';
-  html+='</div></div>';
-  html+='<div class="card"><div class="ct">4 · Options</div>';
-  html+='<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px">';
-  html+='<div><div style="font-size:11px;color:var(--tx2);margin-bottom:7px;font-weight:600">Feedback</div><div class="tog">';
-  html+='<button class="tog-b'+(setupState.feedback==='immediate'?' active':'')+'" onclick="setFeedback(\'immediate\')">Immediate</button>';
-  html+='<button class="tog-b'+(setupState.feedback==='end'?' active':'')+'" onclick="setFeedback(\'end\')">End</button>';
-  html+='</div></div>';
-  html+='<div><div style="font-size:11px;color:var(--tx2);margin-bottom:7px;font-weight:600">Timer</div><div class="tog">';
-  html+='<button class="tog-b'+(!setupState.timed?' active':'')+'" onclick="setTimed(false)">Off</button>';
-  html+='<button class="tog-b'+(setupState.timed?' active':'')+'" onclick="setTimed(true)">On</button>';
-  html+='</div></div></div>';
-  if(setupState.timed) html+='<div style="display:flex;align-items:center;gap:8px"><input class="inp" id="mins-input" style="width:70px" type="number" value="'+setupState.mins+'" min="1"><span style="font-size:12px;color:var(--tx2)">minutes</span></div>';
-  html+='</div>';
-  html+='<div class="card"><div class="ct">5 · Difficulty</div><div style="display:flex;gap:7px;flex-wrap:wrap">';
-  [['all','All'],['easy','Easy'],['medium','Medium'],['hard','Hard']].forEach(function(d){
-    html+='<div class="rc'+(setupState.diff===d[0]?' active':'')+'" onclick="setDiff(\''+d[0]+'\')">'+d[1]+'</div>';
-  });
-  html+='</div></div>';
-  var disabled=!sm||!fqs.length?'disabled':'';
-  html+='<button class="btn btn-p btn-lg" '+disabled+' onclick="startQuiz()">▶ Start · '+fc+' Questions</button>';
-  return html;
-}
-
-function bindSetup(){
-  var cc=document.getElementById('custom-count');
-  if(cc) cc.oninput=function(){ setupState.customCount=this.value; renderPage(); };
-  var mi=document.getElementById('mins-input');
-  if(mi) mi.oninput=function(){ setupState.mins=+this.value; };
-}
-
-function selectSetupMod(i){ setupState.modIdx=i; setupState.topics=[]; renderPage(); }
-function toggleTopic(t){ var i=setupState.topics.indexOf(t); if(i>=0)setupState.topics.splice(i,1); else setupState.topics.push(t); renderPage(); }
-function setQCount(n){ setupState.qCount=n; setupState.customCount=''; renderPage(); }
-function setFeedback(v){ setupState.feedback=v; renderPage(); }
-function setTimed(v){ setupState.timed=v; renderPage(); }
-function setDiff(v){ setupState.diff=v; renderPage(); }
-
-function startQuiz(){
-  var sm=state.modules[setupState.modIdx];
-  var fqs=sm.questions.filter(function(q){
-    var tOk=!setupState.topics.length||setupState.topics.includes(q.topic);
-    var dOk=setupState.diff==='all'||q.difficulty===setupState.diff;
-    return tOk&&dOk;
-  });
-  var cc=document.getElementById('custom-count');
-  if(cc) setupState.customCount=cc.value;
-  var mi=document.getElementById('mins-input');
-  if(mi) setupState.mins=+mi.value;
-  var fc=setupState.customCount?Math.min(parseInt(setupState.customCount)||5,fqs.length):Math.min(setupState.qCount,fqs.length);
-  var shuffled=fqs.slice().sort(function(){return Math.random()-.5;}).slice(0,fc);
-  state.activeQuiz={id:uid(),moduleId:sm.id,moduleName:sm.name,questions:shuffled,timed:setupState.timed,minutes:setupState.mins,feedbackMode:setupState.feedback,answers:{},idx:0,elapsed:0,startTime:nowISO()};
-  renderNav();
-  renderPage();
-}
-
-// ── QUIZ ENGINE ───────────────────────────────────────────────────────────────
-var quizTimer=null;
-
-function renderQuiz(){
-  var quiz=state.activeQuiz;
-  var q=quiz.questions[quiz.idx];
-  var total=quiz.questions.length;
-  var answered=quiz.answers[q.id];
-  var L=['A','B','C','D'];
-  var tl=quiz.timed?quiz.minutes*60:null;
-  var timeLeft=tl!==null?Math.max(0,tl-quiz.elapsed):null;
-  var fmtTime=function(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};
-  var html='<div style="max-width:700px;margin:0 auto">';
-  html+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">';
-  html+='<div style="display:flex;align-items:center;gap:11px"><button class="btn btn-g btn-sm" onclick="exitQuiz()">✕ Exit</button><span style="font-size:12px;color:var(--tx2)">'+esc(quiz.moduleName)+'</span></div>';
-  html+='<div style="display:flex;gap:11px;align-items:center">';
-  if(timeLeft!==null) html+='<div style="font-family:monospace;font-size:14px;font-weight:700;color:'+(timeLeft<60?'var(--rd)':'var(--tx)')+'">⏱ '+fmtTime(timeLeft)+'</div>';
-  html+='<span style="font-size:12px;color:var(--tx2);font-weight:600">'+(quiz.idx+1)+'/'+total+'</span>';
-  html+='</div></div>';
-  html+='<div class="pb" style="margin-bottom:22px"><div class="pf" style="width:'+(quiz.idx/total*100)+'%;background:var(--ac)"></div></div>';
-  html+='<div class="card">';
-  html+='<div style="display:flex;gap:7px;margin-bottom:12px"><span class="badge b-topic">'+esc(q.topic)+'</span><span class="badge b-'+q.difficulty+'">'+q.difficulty+'</span></div>';
-  html+='<div style="font-size:16px;font-weight:600;line-height:1.5;margin-bottom:20px">'+(quiz.idx+1)+'. '+esc(q.text)+'</div>';
-  q.options.forEach(function(opt,i){
-    var cls='opt';
-    if(answered!==undefined){
-      if(i===q.correctIndex) cls+=' cor';
-      else if(i===answered&&answered!==q.correctIndex) cls+=' wrg';
-    } else if(answered===i) cls+=' sel2';
-    var dis=answered!==undefined?'disabled':'';
-    html+='<button class="'+cls+'" '+dis+' onclick="selectAnswer('+i+')">';
-    html+='<span class="ol">'+L[i]+'</span>'+esc(opt)+'</button>';
-  });
-  if(quiz.feedbackMode==='immediate'&&quiz.showFeedback&&answered!==undefined){
-    var ok=answered===q.correctIndex;
-    html+='<div style="margin-top:14px;padding:12px 14px;border-radius:8px;font-size:13px;line-height:1.6;'+(ok?'background:rgba(52,212,138,.08);border:1px solid rgba(52,212,138,.25)':'background:rgba(247,88,88,.08);border:1px solid rgba(247,88,88,.25)')+'">';
-    html+='<strong>'+(ok?'✓ Correct!':'✗ Incorrect. Correct: '+esc(q.options[q.correctIndex]))+'</strong> '+esc(q.explanation)+'</div>';
-  }
-  html+='<div style="margin-top:18px;display:flex;justify-content:flex-end;gap:8px">';
-  if(answered!==undefined&&quiz.feedbackMode==='immediate'&&!quiz.showFeedback)
-    html+='<button class="btn btn-s" onclick="showFeedback()">Show Explanation</button>';
-  if(answered!==undefined&&(quiz.feedbackMode==='end'||(quiz.feedbackMode==='immediate'&&quiz.showFeedback)))
-    html+='<button class="btn btn-p" onclick="nextQuestion()">'+(quiz.idx+1>=total?'Finish':'Next →')+'</button>';
-  html+='</div></div>';
-  html+='<div style="display:flex;gap:4px;margin-top:18px;flex-wrap:wrap;justify-content:center">';
-  quiz.questions.forEach(function(qq,i){
-    var bg=i===quiz.idx?'var(--ac)':quiz.answers[qq.id]!==undefined?'var(--bg4)':'var(--bd)';
-    html+='<div style="width:7px;height:7px;border-radius:50%;background:'+bg+'"></div>';
-  });
-  html+='</div></div>';
-  return html;
-}
-
-function bindQuiz(){
-  clearInterval(quizTimer);
-  if(state.activeQuiz&&state.activeQuiz.timed){
-    quizTimer=setInterval(function(){
-      if(!state.activeQuiz)return clearInterval(quizTimer);
-      state.activeQuiz.elapsed++;
-      var tl=state.activeQuiz.minutes*60;
-      if(state.activeQuiz.elapsed>=tl){ clearInterval(quizTimer); finishQuiz(); return; }
-      // Update timer display only
-      var tEl=document.querySelector('[style*="font-family:monospace"]');
-      if(tEl){
-        var left=Math.max(0,tl-state.activeQuiz.elapsed);
-        var s=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');
-        tEl.textContent='⏱ '+s;
-        tEl.style.color=left<60?'var(--rd)':'var(--tx)';
-      }
-    },1000);
-  }
-}
-
-function selectAnswer(i){
-  var quiz=state.activeQuiz;
-  var q=quiz.questions[quiz.idx];
-  if(quiz.answers[q.id]!==undefined)return;
-  quiz.answers[q.id]=i;
-  if(quiz.feedbackMode==='immediate') quiz.showFeedback=true;
-  renderPage();
-}
-
-function showFeedback(){ state.activeQuiz.showFeedback=true; renderPage(); }
-
-function nextQuestion(){
-  var quiz=state.activeQuiz;
-  quiz.showFeedback=false;
-  if(quiz.idx+1>=quiz.questions.length){ finishQuiz(); return; }
-  quiz.idx++;
-  renderPage();
-}
-
-function finishQuiz(){
-  clearInterval(quizTimer);
-  var quiz=state.activeQuiz;
-  var cc=quiz.questions.filter(function(q){return quiz.answers[q.id]===q.correctIndex;}).length;
-  var score=pct(cc,quiz.questions.length);
-  var tb={};
-  quiz.questions.forEach(function(q){
-    if(!tb[q.topic])tb[q.topic]={correct:0,total:0};
-    tb[q.topic].total++;
-    if(quiz.answers[q.id]===q.correctIndex)tb[q.topic].correct++;
-  });
-  state.sessions.push({id:uid(),moduleId:quiz.moduleId,moduleName:quiz.moduleName,questions:quiz.questions,answers:quiz.answers,totalQuestions:quiz.questions.length,correctCount:cc,score:score,passed:score>=state.passMark,topicBreakdown:tb,date:nowISO(),durationSeconds:quiz.elapsed});
-  state.activeQuiz=null;
-  saveState();
-  navigate('results');
-}
-
-function exitQuiz(){ clearInterval(quizTimer); state.activeQuiz=null; navigate('overview'); }
-
-// ── RESULTS ───────────────────────────────────────────────────────────────────
-var resultsState={selIdx:-1,showReview:false};
-
-function renderResults(){
-  var ss=state.sessions;
-  if(!ss.length) return '<div class="card"><div class="empty"><div class="empty-i">📋</div><div class="empty-t">No results yet</div></div></div>';
-  if(resultsState.selIdx<0||resultsState.selIdx>=ss.length) resultsState.selIdx=ss.length-1;
-  var s=ss[resultsState.selIdx];
-  var pm=state.passMark;
-  var passed=s.score>=pm;
-  var html='<div class="sh"><div><div class="st">Results</div></div>';
-  if(ss.length>1){
-    html+='<select class="sel" style="width:auto" onchange="selectSession(this.value)">';
-    ss.forEach(function(x,i){ html+='<option value="'+i+'"'+(i===resultsState.selIdx?' selected':'')+'>'+esc(x.moduleName)+' · '+fmtDate(x.date)+' · '+x.score+'%</option>'; });
-    html+='</select>';
-  }
-  html+='</div>';
-  html+='<div class="card"><div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap">';
-  html+='<div class="score-ring" style="border-color:'+(passed?'var(--gr)':'var(--rd)')+'">';
-  html+='<div style="font-size:28px;font-weight:800;color:'+(passed?'var(--gr)':'var(--rd)')+'">'+s.score+'%</div>';
-  html+='<div style="font-size:10px;font-weight:700;color:'+(passed?'var(--gr)':'var(--rd)')+';letter-spacing:1px">'+(passed?'PASS':'FAIL')+'</div></div>';
-  html+='<div style="flex:1"><div style="font-size:16px;font-weight:700;margin-bottom:3px">'+esc(s.moduleName)+'</div>';
-  html+='<div style="font-size:12px;color:var(--tx2);margin-bottom:11px">'+fmtDate(s.date)+'</div>';
-  html+='<div class="g4">';
-  [{l:'Total',v:s.totalQuestions},{l:'Correct',v:s.correctCount,c:'var(--gr)'},{l:'Wrong',v:s.totalQuestions-s.correctCount,c:'var(--rd)'},{l:'Pass Mark',v:pm+'%'}].forEach(function(k){
-    html+='<div style="background:var(--bg3);border-radius:8px;padding:9px 11px;text-align:center"><div style="font-size:18px;font-weight:700;color:'+k.c+'">'+k.v+'</div><div style="font-size:10px;color:var(--tx3)">'+k.l+'</div></div>';
-  });
-  html+='</div></div></div></div>';
-  html+='<div class="card"><div class="ct">Topic Breakdown</div>';
-  Object.keys(s.topicBreakdown||{}).forEach(function(t){
-    var d=s.topicBreakdown[t];
-    var p=pct(d.correct,d.total);
-    var col=p>=pm?'var(--gr)':p>=50?'var(--am)':'var(--rd)';
-    html+='<div style="display:flex;align-items:center;gap:9px;margin-bottom:9px">';
-    html+='<div style="font-size:12px;font-weight:500;width:130px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(t)+'</div>';
-    html+='<div style="flex:1"><div class="pb"><div class="pf" style="width:'+p+'%;background:'+col+'"></div></div></div>';
-    html+='<div style="font-size:11px;font-weight:700;width:32px;text-align:right;color:'+col+'">'+p+'%</div></div>';
-  });
-  html+='</div>';
-  var missedCount=s.questions.filter(function(q){return s.answers[q.id]!==q.correctIndex;}).length;
-  html+='<div style="display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap">';
-  html+='<button class="btn btn-s" onclick="toggleReview()">'+(resultsState.showReview?'Hide Review':'📖 Review')+'</button>';
-  html+='<button class="btn btn-s" onclick="retryMissed()">↩ Retry Missed ('+missedCount+')</button>';
-  html+='<button class="btn btn-s" onclick="exportCSV([state.sessions[resultsState.selIdx]])">⬇ CSV</button>';
-  html+='</div>';
-  if(resultsState.showReview){
-    s.questions.forEach(function(q,i){
-      var ua=s.answers[q.id];
-      var ok=ua===q.correctIndex;
-      html+='<div class="rv '+(ok?'vc':'vw')+'">';
-      html+='<div style="display:flex;gap:7px;margin-bottom:7px;flex-wrap:wrap"><span style="font-weight:700;color:'+(ok?'var(--gr)':'var(--rd)')+'">'+(ok?'✓':'✗')+'</span><span class="badge b-topic">'+esc(q.topic)+'</span><span class="badge b-'+q.difficulty+'">'+q.difficulty+'</span></div>';
-      html+='<div style="font-size:13px;font-weight:600;margin-bottom:9px">'+(i+1)+'. '+esc(q.text)+'</div>';
-      html+='<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px">';
-      q.options.forEach(function(opt,oi){
-        var bg=oi===q.correctIndex?'rgba(52,212,138,.12)':oi===ua&&!ok?'rgba(247,88,88,.12)':'var(--bg3)';
-        var bd=oi===q.correctIndex?'rgba(52,212,138,.3)':oi===ua&&!ok?'rgba(247,88,88,.3)':'transparent';
-        var fc=oi===q.correctIndex?'var(--gr)':oi===ua&&!ok?'var(--rd)':'var(--tx2)';
-        html+='<div style="padding:3px 9px;border-radius:7px;font-size:12px;background:'+bg+';border:1px solid '+bd+';color:'+fc+'">'+'ABCD'[oi]+'. '+esc(opt)+'</div>';
-      });
-      html+='</div><div style="font-size:12px;color:var(--tx2);background:var(--bg3);padding:7px 11px;border-radius:7px">💡 '+esc(q.explanation)+'</div>';
-      html+='</div>';
-    });
-  }
-  return html;
-}
-
-function bindResults(){}
-function selectSession(i){ resultsState.selIdx=+i; resultsState.showReview=false; renderPage(); }
-function toggleReview(){ resultsState.showReview=!resultsState.showReview; renderPage(); }
-function retryMissed(){
-  var s=state.sessions[resultsState.selIdx];
-  var missed=s.questions.filter(function(q){return s.answers[q.id]!==q.correctIndex;});
-  if(!missed.length)return;
-  state.activeQuiz={id:uid(),moduleId:s.moduleId,moduleName:s.moduleName+' (Retry)',questions:missed,timed:false,minutes:10,feedbackMode:'immediate',answers:{},idx:0,elapsed:0,startTime:nowISO()};
-  renderNav(); renderPage();
-}
-
-// ── DASHBOARD ─────────────────────────────────────────────────────────────────
-function renderDashboard(){
-  var ss=state.sessions;
-  if(!ss.length) return '<div class="card"><div class="empty"><div class="empty-i">📊</div><div class="empty-t">No data yet</div><div class="empty-d">Complete a quiz to see your dashboard.</div></div></div>';
-  var pm=state.passMark;
-  var avg=Math.round(ss.reduce(function(a,q){return a+q.score;},0)/ss.length);
-  var pr=pct(ss.filter(function(s){return s.passed;}).length,ss.length);
-  var tp=topicPerf(ss);
-  var topicArr=Object.keys(tp).map(function(t){return{topic:t,avg:Math.round(tp[t].avg)};}).sort(function(a,b){return b.avg-a.avg;});
-  var passCount=ss.filter(function(s){return s.passed;}).length;
-  var hist=ss.slice(-10);
-  var html='<div class="sh"><div><div class="st">Progress</div><div class="ss">Performance trends</div></div>';
-  html+='<button class="btn btn-s btn-sm" onclick="exportCSV(state.sessions)">⬇ Export CSV</button></div>';
-  html+='<div class="g4" style="margin-bottom:16px">';
-  [{l:'Quizzes',v:ss.length},{l:'Avg Score',v:avg+'%'},{l:'Pass Rate',v:pr+'%'},{l:'Questions',v:ss.reduce(function(a,q){return a+q.totalQuestions;},0)}].forEach(function(k){
-    html+='<div class="card" style="margin-bottom:0"><div class="kv">'+k.v+'</div><div class="kl">'+k.l+'</div></div>';
-  });
-  html+='</div>';
-  // Score history as SVG line chart
-  html+='<div class="card"><div class="ct">Score History</div>';
-  if(hist.length<2){
-    html+='<div style="color:var(--tx3);font-size:12px;text-align:center;padding:16px">Complete more quizzes to see trend</div>';
-  } else {
-    var W=500,H=110,P=24;
-    var maxS=100,minS=0;
-    var passY=H-P-((pm-minS)/(maxS-minS))*(H-P*2);
-    var pts=hist.map(function(s,i){
-      return{x:P+(i/(hist.length-1))*(W-P*2),y:H-P-((s.score-minS)/(maxS-minS))*(H-P*2),score:s.score,name:fmtDate(s.date)};
-    });
-    var pathD=pts.map(function(p,i){return(i===0?'M':'L')+p.x.toFixed(1)+','+p.y.toFixed(1);}).join(' ');
-    html+='<div style="overflow-x:auto"><svg viewBox="0 0 '+W+' '+H+'" style="width:100%;min-width:280px">';
-    html+='<line x1="'+P+'" y1="'+passY.toFixed(1)+'" x2="'+(W-P)+'" y2="'+passY.toFixed(1)+'" stroke="var(--gr)" stroke-width="1" stroke-dasharray="4 4" opacity="0.6"/>';
-    html+='<path d="'+pathD+'" fill="none" stroke="var(--ac)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
-    pts.forEach(function(p){
-      html+='<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="4" fill="var(--ac)"/>';
-      html+='<text x="'+p.x.toFixed(1)+'" y="'+(p.y-8).toFixed(1)+'" text-anchor="middle" font-size="9" fill="var(--tx3)">'+p.score+'%</text>';
-    });
-    html+='</svg></div>';
-  }
-  html+='</div>';
-  html+='<div class="g2">';
-  // Topic bars
-  html+='<div class="card"><div class="ct">By Topic</div>';
-  var maxA=Math.max.apply(null,topicArr.map(function(t){return t.avg;}),1)||1;
-  topicArr.slice(0,8).forEach(function(t){
-    var col=t.avg>=pm?'var(--gr)':t.avg>=50?'var(--am)':'var(--rd)';
-    html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">';
-    html+='<div style="font-size:11px;color:var(--tx2);width:90px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(t.topic)+'</div>';
-    html+='<div style="flex:1;background:var(--bg3);border-radius:99px;height:14px;overflow:hidden"><div style="width:'+t.avg+'%;background:'+col+';height:100%;border-radius:99px;display:flex;align-items:center;padding-left:5px;transition:width .5s"><span style="font-size:9px;color:#fff;font-weight:700;white-space:nowrap">'+t.avg+'%</span></div></div>';
-    html+='</div>';
-  });
-  html+='</div>';
-  // Pass/fail
-  html+='<div class="card"><div class="ct">Pass vs Fail</div>';
-  html+='<div style="display:flex;gap:20px;align-items:center;justify-content:center;padding:20px 0">';
-  html+='<div style="text-align:center"><div style="font-size:44px;font-weight:800;color:var(--gr)">'+passCount+'</div><div style="font-size:12px;color:var(--tx2);margin-top:4px">Passed</div></div>';
-  html+='<div style="width:1px;height:60px;background:var(--bd)"></div>';
-  html+='<div style="text-align:center"><div style="font-size:44px;font-weight:800;color:var(--rd)">'+(ss.length-passCount)+'</div><div style="font-size:12px;color:var(--tx2);margin-top:4px">Failed</div></div>';
-  html+='</div>';
-  html+='<div style="height:8px;border-radius:99px;overflow:hidden;background:var(--bg3)"><div style="height:100%;width:'+pr+'%;background:var(--gr);border-radius:99px"></div></div>';
-  html+='<div style="font-size:11px;color:var(--tx3);text-align:center;margin-top:6px">'+pr+'% pass rate</div></div>';
-  html+='</div>';
-  return html;
-}
-
-// ── ATTENTION ─────────────────────────────────────────────────────────────────
-function renderAttention(){
-  var ss=state.sessions;
-  if(!ss.length) return '<div class="card"><div class="empty"><div class="empty-i">⚠</div><div class="empty-t">No data yet</div></div></div>';
-  var tp=topicPerf(ss);
-  var sorted=Object.keys(tp).sort(function(a,b){return tp[a].avg-tp[b].avg;});
-  var avg=Math.round(ss.reduce(function(a,q){return a+q.score;},0)/ss.length);
-  var rdy=avg>=90?'Ready to Pass':avg>=75?'Almost Ready':'Not Ready';
-  var rc=avg>=90?'var(--gr)':avg>=75?'var(--am)':'var(--rd)';
-  var mm={};
-  ss.forEach(function(s){(s.questions||[]).forEach(function(q){if(s.answers&&s.answers[q.id]!==q.correctIndex){if(!mm[q.id])mm[q.id]={q:q,n:0};mm[q.id].n++;}});});
-  var top5=Object.values(mm).sort(function(a,b){return b.n-a.n;}).slice(0,5);
-  var html='<div class="sh"><div><div class="st">Needs Attention</div><div class="ss">Focus areas to improve</div></div>';
-  html+='<div style="padding:7px 12px;background:var(--bg3);border-radius:8px;border:1px solid var(--bd2);font-size:13px;font-weight:700;color:'+rc+'">'+rdy+'</div></div>';
-  html+='<div class="g2">';
-  html+='<div class="card"><div class="ct">Weakest Topics</div>';
-  sorted.slice(0,8).forEach(function(t,i){
-    var a=tp[t].avg;
-    var col=a<60?'var(--rd)':a<75?'var(--am)':'var(--gr)';
-    html+='<div class="ai-item"><div style="width:22px;height:22px;border-radius:5px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--tx2);flex-shrink:0">'+(i+1)+'</div>';
-    html+='<div style="flex:1"><div style="font-size:12px;font-weight:600;margin-bottom:3px">'+esc(t)+'</div><div class="pb" style="height:4px"><div class="pf" style="width:'+a+'%;background:'+col+'"></div></div></div>';
-    html+='<div style="font-size:12px;font-weight:700;color:'+col+'">'+Math.round(a)+'%</div></div>';
-  });
-  html+='</div>';
-  html+='<div class="card"><div class="ct">Most Missed</div>';
-  if(!top5.length){ html+='<div style="color:var(--tx3);font-size:12px">No repeated mistakes!</div>'; }
-  else { top5.forEach(function(x){ html+='<div style="margin-bottom:11px;padding-bottom:11px;border-bottom:1px solid var(--bd)"><div style="display:flex;gap:5px;margin-bottom:5px"><span class="badge b-topic">'+esc(x.q.topic)+'</span><span style="font-size:10px;color:var(--rd);font-weight:700">missed '+x.n+'×</span></div><div style="font-size:12px;line-height:1.4">'+esc(x.q.text)+'</div></div>'; }); }
-  html+='</div></div>';
-  html+='<div class="card"><div class="ct">📌 Recommendations</div>';
-  var weak=sorted.filter(function(t){return tp[t].avg<75;});
-  if(!weak.length){ html+='<div style="font-size:13px;color:var(--gr)">🎉 All topics above pass threshold!</div>'; }
-  else { weak.slice(0,5).forEach(function(t){ var a=Math.round(tp[t].avg); html+='<div style="padding:11px 13px;background:var(--bg3);border-radius:8px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:13px;font-weight:600;margin-bottom:2px">Review: <span style="color:var(--ac2)">'+esc(t)+'</span></div><div style="font-size:11px;color:var(--tx2)">Score: '+a+'% · Gap: '+Math.max(0,75-a)+'%</div></div><span class="badge b-fail">Focus</span></div>'; }); }
-  html+='</div>';
-  return html;
-}
-
 
 // ── STUDENT INSIGHTS ──────────────────────────────────────────────────────────
-var SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
-
-
-
 function loadInsights(){
+  if(!SCRIPT_URL){
+    insightsState.err='No Apps Script URL configured. Go to Settings to add it.';
+    insightsState.loading=false;
+    renderPage();
+    return;
+  }
   insightsState.loading=true;
   insightsState.err='';
   renderPage();
   fetch(SCRIPT_URL+'?t='+Date.now())
-    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
     .then(function(data){
       insightsState.results=data.results||[];
       insightsState.loading=false;
@@ -1201,16 +740,16 @@ function renderInsights(){
     html+='<div class="card" style="text-align:center;padding:40px 20px">';
     html+='<div style="font-size:44px;margin-bottom:12px">👥</div>';
     html+='<div style="font-size:16px;font-weight:600;margin-bottom:7px">Load Student Results</div>';
-    html+='<div style="font-size:13px;color:var(--tx2);margin-bottom:16px">Fetch the latest results from all students.</div>';
+    html+='<div style="font-size:13px;color:var(--tx2);margin-bottom:16px">Fetch the latest quiz results from all students.</div>';
     html+='<button class="btn btn-p" onclick="loadInsights()">Load Results</button>';
     html+='</div>';
     return html;
   }
 
   if(insightsState.err){
-    html+='<div class="card" style="border:1px solid rgba(247,88,88,.3)"><div style="color:var(--rd);font-size:13px;margin-bottom:8px;font-weight:600">⚠ Could not load results</div>';
+    html+='<div class="card" style="border:1px solid rgba(247,88,88,.3)">';
+    html+='<div style="color:var(--rd);font-size:13px;margin-bottom:8px;font-weight:600">⚠ Could not load results</div>';
     html+='<div style="font-size:12px;color:var(--tx2);margin-bottom:12px">'+esc(insightsState.err)+'</div>';
-    html+='<div style="font-size:11px;color:var(--tx3);margin-bottom:12px">Make sure your Apps Script URL is set correctly in the code.</div>';
     html+='<button class="btn btn-p btn-sm" onclick="loadInsights()">Try Again</button></div>';
     return html;
   }
@@ -1219,26 +758,26 @@ function renderInsights(){
     html+='<div class="card"><div style="text-align:center;padding:32px 20px">';
     html+='<div style="font-size:44px;margin-bottom:12px">📭</div>';
     html+='<div style="font-size:16px;font-weight:600;margin-bottom:7px">No results yet</div>';
-    html+='<div style="font-size:13px;color:var(--tx2)">Results will appear here once students complete quizzes.</div>';
+    html+='<div style="font-size:13px;color:var(--tx2)">Results appear once students complete quizzes.</div>';
     html+='</div></div>';
     return html;
   }
 
-  // ── KPIs ──
-  var students=Array.from(new Set(sr.map(function(r){return r.studentName;})));
+  var students=uniqueArr(sr.map(function(r){return r.studentName;}));
   var avgScore=Math.round(sr.reduce(function(a,r){return a+Number(r.score);},0)/sr.length);
   var passRate=pct(sr.filter(function(r){return r.passed==='true'||r.passed===true;}).length,sr.length);
+
   html+='<div class="g4" style="margin-bottom:16px">';
   [{l:'Students',v:students.length},{l:'Total Quizzes',v:sr.length},{l:'Avg Score',v:avgScore+'%'},{l:'Pass Rate',v:passRate+'%'}].forEach(function(k){
     html+='<div class="card" style="margin-bottom:0"><div class="kv">'+k.v+'</div><div class="kl">'+k.l+'</div></div>';
   });
   html+='</div>';
 
-  // ── TOPIC STRUGGLES ──
+  // Topic struggles
   var topicMap={};
   sr.forEach(function(r){
     var tb={};
-    try{ tb=typeof r.topicBreakdown==='string'?JSON.parse(r.topicBreakdown):r.topicBreakdown; }catch(e){}
+    try{tb=typeof r.topicBreakdown==='string'?JSON.parse(r.topicBreakdown):r.topicBreakdown;}catch(e){}
     Object.keys(tb||{}).forEach(function(t){
       var d=tb[t];
       if(!topicMap[t])topicMap[t]={correct:0,total:0};
@@ -1246,14 +785,15 @@ function renderInsights(){
       topicMap[t].total+=Number(d.total||0);
     });
   });
-  var topicArr=Object.keys(topicMap).map(function(t){
-    return{topic:t,avg:pct(topicMap[t].correct,topicMap[t].total),correct:topicMap[t].correct,total:topicMap[t].total};
-  }).sort(function(a,b){return a.avg-b.avg;});
+  var topicArr=[];
+  Object.keys(topicMap).forEach(function(t){
+    topicArr.push({topic:t,avg:pct(topicMap[t].correct,topicMap[t].total),correct:topicMap[t].correct,total:topicMap[t].total});
+  });
+  topicArr.sort(function(a,b){return a.avg-b.avg;});
 
   html+='<div class="g2" style="margin-bottom:14px">';
 
-  // Weakest topics
-  html+='<div class="card" style="margin-bottom:0"><div class="ct">⚠ Weakest Topics (Group)</div>';
+  html+='<div class="card" style="margin-bottom:0"><div class="ct">⚠ Weakest Topics</div>';
   topicArr.slice(0,8).forEach(function(t){
     var col=t.avg<60?'var(--rd)':t.avg<75?'var(--am)':'var(--gr)';
     html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">';
@@ -1267,15 +807,17 @@ function renderInsights(){
   html+='</div>';
 
   // Student leaderboard
-  html+='<div class="card" style="margin-bottom:0"><div class="ct">👤 Students</div>';
-  var studentStats=students.map(function(name){
+  var studentStats=[];
+  students.forEach(function(name){
     var rows=sr.filter(function(r){return r.studentName===name;});
     var avg=Math.round(rows.reduce(function(a,r){return a+Number(r.score);},0)/rows.length);
     var passes=rows.filter(function(r){return r.passed==='true'||r.passed===true;}).length;
     var last=rows[rows.length-1];
-    return{name:name,avg:avg,quizzes:rows.length,passes:passes,lastDate:last?last.date:''};
-  }).sort(function(a,b){return b.avg-a.avg;});
+    studentStats.push({name:name,avg:avg,quizzes:rows.length,passes:passes,lastDate:last?last.date:''});
+  });
+  studentStats.sort(function(a,b){return b.avg-a.avg;});
 
+  html+='<div class="card" style="margin-bottom:0"><div class="ct">👤 Students</div>';
   studentStats.forEach(function(s,i){
     var col=s.avg>=pm?'var(--gr)':s.avg>=pm*0.8?'var(--am)':'var(--rd)';
     html+='<div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;padding:9px 11px;background:var(--bg3);border-radius:8px">';
@@ -1287,9 +829,9 @@ function renderInsights(){
   });
   html+='</div></div>';
 
-  // Per-module breakdown
-  html+='<div class="card"><div class="ct">📋 Results by Module</div>';
-  var moduleNames=Array.from(new Set(sr.map(function(r){return r.moduleName;})));
+  // Per module
+  html+='<div class="card"><div class="ct">📋 By Module</div>';
+  var moduleNames=uniqueArr(sr.map(function(r){return r.moduleName;}));
   moduleNames.forEach(function(mn){
     var rows=sr.filter(function(r){return r.moduleName===mn;});
     var avg=Math.round(rows.reduce(function(a,r){return a+Number(r.score);},0)/rows.length);
@@ -1302,7 +844,6 @@ function renderInsights(){
     html+='</div>';
   });
   html+='</div>';
-
   return html;
 }
 
@@ -1310,36 +851,54 @@ function renderInsights(){
 function renderSettings(){
   var html='<div style="max-width:500px">';
   html+='<div class="sh"><div><div class="st">Settings</div></div></div>';
+
   html+='<div class="card"><div class="ct">Appearance</div>';
-  html+='<div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:600">Theme</div></div>';
+  html+='<div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:13px;font-weight:600">Theme</div>';
   html+='<div class="tog"><button class="tog-b'+(state.theme==='dark'?' active':'')+'" onclick="setTheme(\'dark\')">🌙 Dark</button><button class="tog-b'+(state.theme==='light'?' active':'')+'" onclick="setTheme(\'light\')">☀ Light</button></div></div></div>';
+
   html+='<div class="card"><div class="ct">Apps Script URL</div>';
-  html+='<div style="font-size:13px;color:var(--tx2);margin-bottom:10px;line-height:1.6">Paste your Google Apps Script web app URL here to enable Student Insights.</div>';
-  html+='<div style="display:flex;gap:8px;margin-bottom:8px"><input class="inp" id="script-url" placeholder="https://script.google.com/macros/s/..." value="'+esc(SCRIPT_URL==='PASTE_YOUR_APPS_SCRIPT_URL_HERE'?'':SCRIPT_URL)+'"><button class="btn btn-p btn-sm" onclick="saveScriptURL()">Save</button></div>';
-  html+='<div style="font-size:11px;color:var(--tx3)">Get this URL from Google Apps Script → Deploy → Manage Deployments</div></div>';
+  html+='<div style="font-size:13px;color:var(--tx2);margin-bottom:10px;line-height:1.6">Paste your Google Apps Script URL to enable Student Insights.</div>';
+  html+='<div style="display:flex;gap:8px;margin-bottom:8px"><input class="inp" id="script-url" placeholder="https://script.google.com/macros/s/..." value="'+esc(SCRIPT_URL)+'"><button class="btn btn-p btn-sm" onclick="saveScriptURL()">Save</button></div>';
+  html+='<div style="font-size:11px;color:var(--tx3)">Get this from Apps Script → Deploy → Manage Deployments</div></div>';
+
   html+='<div class="card"><div class="ct">Pass Threshold</div>';
   html+='<div style="font-size:13px;font-weight:600;margin-bottom:3px">Minimum score to pass (%)</div>';
   html+='<div style="font-size:11px;color:var(--tx2);margin-bottom:11px">Default: 75%</div>';
   html+='<div style="display:flex;gap:9px;align-items:center;margin-bottom:9px"><input class="inp" id="pass-mark" style="width:80px" type="number" value="'+state.passMark+'" min="1" max="100"><button class="btn btn-p btn-sm" onclick="savePassMark()">Save</button></div>';
   html+='<div style="padding:9px 11px;background:var(--bg3);border-radius:8px;font-size:12px;color:var(--tx2)">Current: <strong style="color:var(--tx)">'+state.passMark+'%</strong></div></div>';
+
   html+='</div>';
   return html;
 }
 
-function bindSettings(){}
 function saveScriptURL(){
   var el=document.getElementById('script-url');
   if(el&&el.value.trim()){
     SCRIPT_URL=el.value.trim();
-    try{ localStorage.setItem('qc_script_url', SCRIPT_URL); }catch(e){}
-    alert('URL saved! Go to Student Insights to load results.');
+    try{localStorage.setItem('qc_script_url',SCRIPT_URL);}catch(e){}
+    alert('URL saved!');
   }
 }
-function savePassMark(){ var el=document.getElementById('pass-mark'); if(el) state.passMark=+el.value; saveState(); renderPage(); }
+
+function savePassMark(){
+  var el=document.getElementById('pass-mark');
+  if(el) state.passMark=+el.value;
+  saveState();
+  renderPage();
+}
 
 // ── THEME & SIDEBAR ───────────────────────────────────────────────────────────
-function toggleTheme(){ state.theme=state.theme==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',state.theme); document.getElementById('theme-btn').textContent=state.theme==='dark'?'☀':'🌙'; saveState(); }
-function setTheme(t){ state.theme=t; document.documentElement.setAttribute('data-theme',t); document.getElementById('theme-btn').textContent=t==='dark'?'☀':'🌙'; renderPage(); }
+function setTheme(t){
+  state.theme=t;
+  document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('theme-btn').textContent=t==='dark'?'☀':'🌙';
+  saveState();
+  renderPage();
+}
+
+function toggleTheme(){
+  setTheme(state.theme==='dark'?'light':'dark');
+}
 
 function toggleSidebar(){
   var sb=document.getElementById('sidebar');
@@ -1347,24 +906,25 @@ function toggleSidebar(){
   sb.classList.toggle('open');
   ov.style.display=sb.classList.contains('open')?'block':'none';
 }
+
 function closeSidebar(){
   var sb=document.getElementById('sidebar');
   var ov=document.getElementById('overlay');
   sb.classList.remove('open');
   ov.style.display='none';
 }
+
 document.getElementById('overlay').onclick=closeSidebar;
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-loadState();
-try{ var _su=localStorage.getItem('qc_script_url'); if(_su) SCRIPT_URL=_su; }catch(e){}
-if(state.theme==='light') document.documentElement.setAttribute('data-theme','light');
-document.getElementById('theme-btn').textContent=state.theme==='dark'?'☀':'🌙';
 if('serviceWorker' in navigator){
-  window.addEventListener('load', function(){
+  window.addEventListener('load',function(){
     navigator.serviceWorker.register('service-worker.js');
   });
 }
+loadState();
+if(state.theme==='light') document.documentElement.setAttribute('data-theme','light');
+document.getElementById('theme-btn').textContent=state.theme==='dark'?'☀':'🌙';
 renderNav();
 renderPage();
 </script>
