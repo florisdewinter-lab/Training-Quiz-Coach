@@ -306,7 +306,7 @@ function renderModules(){
   html+='<div style="background:linear-gradient(135deg,rgba(79,142,247,.1),rgba(167,139,250,.1));border:1px solid rgba(79,142,247,.25);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">';
   html+='<div><div style="font-size:13px;font-weight:600;margin-bottom:2px">📡 Publish to Students</div>';
   html+='<div style="font-size:11px;color:var(--tx2)">'+ms.length+' module(s) · Download modules.json then upload to GitHub</div></div>';
-  html+='<button class="btn btn-p btn-sm" onclick="publishModules()"'+(ms.length?'':' disabled')+'>⬆ Publish All Modules</button>';
+  html+='<button id="publish-btn" class="btn btn-p btn-sm" onclick="publishModules()"'+(ms.length?'':' disabled')+'>⬆ Publish All Modules</button>';
   html+='</div>';
 
   // Saved modules grouped by category
@@ -532,12 +532,36 @@ function renameModule(i){
 
 function publishModules(){
   if(!state.modules.length){alert('No modules to publish.');return;}
-  var payload=JSON.stringify({version:nowISO(),modules:state.modules},null,2);
-  var a=document.createElement('a');
-  a.href='data:application/json;charset=utf-8,'+encodeURIComponent(payload);
-  a.download='modules.json';
-  a.click();
-  alert('modules.json downloaded!\n\nUpload it to the root of your Training-Quiz-Coach repo on GitHub.');
+  if(!SCRIPT_URL){alert('No Apps Script URL configured.\nGo to Settings to add it first.');return;}
+  var btn=document.getElementById('publish-btn');
+  if(btn){btn.disabled=true;btn.innerHTML='<span class="spinner"></span>Publishing...';}
+  var payload=JSON.stringify({type:'publish_modules',version:nowISO(),modules:state.modules});
+  fetch(SCRIPT_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:payload,
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){
+    if(data.status==='ok'){
+      showToast('✅ Published! Students can now update their app.');
+    } else {
+      showToast('❌ Publish failed: '+(data.message||'Unknown error'),true);
+    }
+    if(btn){btn.disabled=false;btn.innerHTML='⬆ Publish All Modules';}
+  })
+  .catch(function(e){
+    showToast('❌ Publish failed: '+e.message,true);
+    if(btn){btn.disabled=false;btn.innerHTML='⬆ Publish All Modules';}
+  });
+}
+
+function showToast(msg,isErr){
+  var t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:'+(isErr?'var(--rd)':'var(--gr)')+';color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.3);white-space:nowrap';
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(function(){t.remove();},3500);
 }
 
 // ── MODULE DETAIL ─────────────────────────────────────────────────────────────
