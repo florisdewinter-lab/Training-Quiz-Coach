@@ -317,7 +317,7 @@ function renderOverview(){
   var m=state.modules;
   var sr=insightsState.results;
   var pm=state.passMark;
-  var students=[...new Set(sr.map(function(r){return r.studentName;}))];
+  var students=Array.from(new Set(sr.map(function(r){return r.studentName;})));
   var passRate=sr.length?pct(sr.filter(function(r){return r.passed==='true'||r.passed===true;}).length,sr.length):0;
   var totalQs=sr.reduce(function(a,r){return a+Number(r.totalQuestions||0);},0);
 
@@ -432,7 +432,7 @@ function renderModules(){
     html+='<input type="file" id="csv-file" accept=".csv" style="display:none">';
     html+='</div>';
     if(modState.questions.length){
-      html+='<div style="margin-top:10px;padding:11px 13px;background:rgba(52,212,138,.08);border:1px solid rgba(52,212,138,.25);border-radius:8px;font-size:13px">✅ <strong>'+modState.questions.length+' questions</strong> loaded across <strong>'+[...new Set(modState.questions.map(function(q){return q.topic;}))].length+'</strong> topics.</div>';
+      html+='<div style="margin-top:10px;padding:11px 13px;background:rgba(52,212,138,.08);border:1px solid rgba(52,212,138,.25);border-radius:8px;font-size:13px">✅ <strong>'+modState.questions.length+' questions</strong> loaded across <strong>'+Array.from(new Set(modState.questions.map(function(q){return q.topic;}))).length+'</strong> topics.</div>';
     }
   } else {
     // Manual entry form
@@ -565,7 +565,7 @@ function saveModule(){
   saveModFormState();
   if(!modState.name.trim()){modState.err='Module name required.';renderPage();return;}
   if(!modState.questions.length){modState.err='Add at least 1 question.';renderPage();return;}
-  var topics=[...new Set(modState.questions.map(function(q){return q.topic;}))];
+  var topics=Array.from(new Set(modState.questions.map(function(q){return q.topic;})));
   state.modules.push({id:uid(),name:modState.name.trim(),category:modState.category.trim(),topics:topics,questions:modState.questions.slice(),createdAt:nowISO()});
   modState.name=''; modState.category=''; modState.questions=[]; modState.err=''; modState.qText=''; modState.opts=['','','','']; modState.topic='';
   saveState();
@@ -757,7 +757,7 @@ function detailSaveQuestion(){
     topic:detailState.topic.trim(),
     difficulty:detailState.diff
   };
-  m.topics=[...new Set(m.questions.map(function(q){return q.topic;}))];
+  m.topics=Array.from(new Set(m.questions.map(function(q){return q.topic;})));
   detailState.editIdx=null;
   detailState.qText=''; detailState.opts=['','','','']; detailState.correct=0; detailState.explain=''; detailState.topic=''; detailState.err='';
   saveState();
@@ -774,7 +774,7 @@ function detailDeleteQuestion(i){
   if(!confirm('Delete this question?')) return;
   var m=state.modules[state.activeModuleIdx];
   m.questions.splice(i,1);
-  m.topics=[...new Set(m.questions.map(function(q){return q.topic;}))];
+  m.topics=Array.from(new Set(m.questions.map(function(q){return q.topic;})));
   saveState();
   renderPage();
 }
@@ -1225,7 +1225,7 @@ function renderInsights(){
   }
 
   // ── KPIs ──
-  var students=[...new Set(sr.map(function(r){return r.studentName;}))];
+  var students=Array.from(new Set(sr.map(function(r){return r.studentName;})));
   var avgScore=Math.round(sr.reduce(function(a,r){return a+Number(r.score);},0)/sr.length);
   var passRate=pct(sr.filter(function(r){return r.passed==='true'||r.passed===true;}).length,sr.length);
   html+='<div class="g4" style="margin-bottom:16px">';
@@ -1289,7 +1289,7 @@ function renderInsights(){
 
   // Per-module breakdown
   html+='<div class="card"><div class="ct">📋 Results by Module</div>';
-  var moduleNames=[...new Set(sr.map(function(r){return r.moduleName;}))];
+  var moduleNames=Array.from(new Set(sr.map(function(r){return r.moduleName;})));
   moduleNames.forEach(function(mn){
     var rows=sr.filter(function(r){return r.moduleName===mn;});
     var avg=Math.round(rows.reduce(function(a,r){return a+Number(r.score);},0)/rows.length);
