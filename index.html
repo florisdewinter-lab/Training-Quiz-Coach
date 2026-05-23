@@ -312,47 +312,52 @@ function renderPage(){
 
 // ── OVERVIEW ──────────────────────────────────────────────────────────────────
 function renderOverview(){
-  var s=state.sessions, m=state.modules, pm=state.passMark;
-  var avg=s.length?Math.round(s.reduce(function(a,q){return a+q.score;},0)/s.length):0;
-  var pr=s.length?pct(s.filter(function(x){return x.score>=pm;}).length,s.length):0;
-  var sk=studyStreak(s);
-  var tp=topicPerf(s);
-  var sorted=Object.keys(tp).sort(function(a,b){return tp[a].avg-tp[b].avg;});
-  var rdy=avg>=pm?'Ready to Pass':avg>=pm*0.8?'Almost Ready':'Not Ready';
-  var rc=avg>=pm?'var(--gr)':avg>=pm*0.8?'var(--am)':'var(--rd)';
-  var html='<div class="sh"><div><div class="st">Overview</div><div class="ss">Performance at a glance</div></div>';
-  if(s.length) html+='<div style="padding:7px 12px;background:var(--bg3);border-radius:8px;border:1px solid var(--bd2);font-size:13px;font-weight:700;color:'+rc+'">'+rdy+'</div>';
-  html+='</div>';
+  var m=state.modules;
+  var sr=insightsState.results;
+  var pm=state.passMark;
+  var students=[...new Set(sr.map(function(r){return r.studentName;}))];
+  var passRate=sr.length?pct(sr.filter(function(r){return r.passed==='true'||r.passed===true;}).length,sr.length):0;
+  var totalQs=sr.reduce(function(a,r){return a+Number(r.totalQuestions||0);},0);
+
+  var html='<div class="sh"><div><div class="st">Overview</div><div class="ss">Your coaching dashboard</div></div></div>';
   html+='<div class="g4" style="margin-bottom:16px">';
-  [{l:'Quizzes',v:s.length,i:'📝'},{l:'Avg Score',v:avg+'%',i:'📈'},{l:'Pass Rate',v:pr+'%',i:'✅'},{l:'Streak',v:sk+'d',i:'🔥'}].forEach(function(k){
+  [{l:'Modules',v:m.length,i:'📚'},{l:'Students',v:students.length,i:'👥'},{l:'Questions Answered',v:totalQs,i:'📝'},{l:'Pass Rate',v:passRate+'%',i:'✅'}].forEach(function(k){
     html+='<div class="card" style="margin-bottom:0"><div style="font-size:22px;margin-bottom:8px">'+k.i+'</div><div class="kv">'+k.v+'</div><div class="kl">'+k.l+'</div></div>';
   });
   html+='</div>';
   if(!m.length){
-    html+='<div class="card"><div class="empty"><div class="empty-i">📚</div><div class="empty-t">No modules yet</div><div class="empty-d">Go to Modules to add your question bank.</div><button class="btn btn-p" onclick="navigate(\'modules\')">Add First Module</button></div></div>';
+    html+='<div class="card"><div class="empty"><div class="empty-i">📚</div><div class="empty-t">No modules yet</div><div class="empty-d">Go to Modules to add your question bank.</div><button class="btn btn-p" onclick="navigate('modules')">Add First Module</button></div></div>';
   } else {
     html+='<div class="g2" style="margin-bottom:0">';
-    html+='<div class="card" style="margin-bottom:0"><div class="ct">Quick Stats</div><div class="g2">';
-    [{l:'Modules',v:m.length},{l:'Qs Answered',v:s.reduce(function(a,q){return a+q.totalQuestions;},0)},{l:'Best Topic',v:sorted[sorted.length-1]||'—'},{l:'Weakest',v:sorted[0]||'—'}].forEach(function(k){
-      html+='<div style="background:var(--bg3);border-radius:8px;padding:10px 12px"><div style="font-size:10px;color:var(--tx3);margin-bottom:3px">'+k.l+'</div><div style="font-size:14px;font-weight:700">'+esc(String(k.v))+'</div></div>';
+    html+='<div class="card" style="margin-bottom:0"><div class="ct">Modules</div>';
+    m.forEach(function(mod){
+      html+='<div style="display:flex;align-items:center;gap:9px;margin-bottom:9px;padding:9px 11px;background:var(--bg3);border-radius:8px">';
+      html+='<span style="font-size:18px">📗</span>';
+      html+='<div style="flex:1"><div style="font-size:12px;font-weight:600">'+esc(mod.name)+'</div>';
+      html+='<div style="font-size:10px;color:var(--tx3)">'+mod.questions.length+' questions · '+(mod.category||'Uncategorised')+'</div></div>';
+      html+='</div>';
     });
-    html+='</div></div>';
-    html+='<div class="card" style="margin-bottom:0"><div class="ct">Recent Activity</div>';
-    if(!s.length){ html+='<div style="color:var(--tx3);font-size:13px;text-align:center;padding:20px 0">No quizzes yet</div>'; }
-    else {
-      s.slice(-5).reverse().forEach(function(q){
-        var cls=q.score>=pm?'b-pass':'b-fail';
+    html+='</div>';
+    html+='<div class="card" style="margin-bottom:0"><div class="ct">Recent Results</div>';
+    if(!sr.length){
+      html+='<div style="color:var(--tx3);font-size:13px;text-align:center;padding:20px 0">No student results yet.<br><span style="font-size:11px">Results appear here once students complete quizzes.</span></div>';
+    } else {
+      sr.slice(-5).reverse().forEach(function(r){
+        var passed=r.passed==='true'||r.passed===true;
         html+='<div style="display:flex;align-items:center;gap:9px;margin-bottom:9px">';
-        html+='<span class="badge '+cls+'">'+q.score+'%</span>';
-        html+='<div style="flex:1"><div style="font-size:12px;font-weight:500">'+esc(q.moduleName)+'</div><div style="font-size:10px;color:var(--tx3)">'+fmtDate(q.date)+' · '+q.totalQuestions+'Q</div></div>';
-        html+='<span class="badge '+cls+'" style="font-size:10px">'+(q.score>=pm?'PASS':'FAIL')+'</span>';
+        html+='<span class="badge '+(passed?'b-pass':'b-fail')+'">'+r.score+'%</span>';
+        html+='<div style="flex:1"><div style="font-size:12px;font-weight:500">'+esc(r.studentName)+'</div>';
+        html+='<div style="font-size:10px;color:var(--tx3)">'+esc(r.moduleName)+' · '+fmtDate(r.date)+'</div></div>';
+        html+='<span class="badge '+(passed?'b-pass':'b-fail')+'" style="font-size:10px">'+(passed?'PASS':'FAIL')+'</span>';
         html+='</div>';
       });
     }
+    html+='<button class="btn btn-s btn-sm" style="margin-top:8px;width:100%;justify-content:center" onclick="navigate('insights')">View All Insights →</button>';
     html+='</div></div>';
   }
   return html;
 }
+
 
 // ── MODULES ───────────────────────────────────────────────────────────────────
 var modState={tab:'csv',name:'',category:'',questions:[],err:'',qText:'',opts:['','','',''],correct:0,explain:'',topic:'',diff:'medium',editIdx:null};
