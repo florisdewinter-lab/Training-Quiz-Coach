@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Quiz Coach"/>
 <title>Training Quiz Coach</title>
-  <link rel="manifest" href="manifest.json">
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#4f8ef7">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
@@ -156,6 +156,32 @@ var state = {
 };
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
+
+// ── PERSISTENCE ───────────────────────────────────────────────────────────────
+function saveState(){
+  try{
+    localStorage.setItem('qc_creator', JSON.stringify({
+      modules: state.modules,
+      sessions: state.sessions,
+      passMark: state.passMark,
+      theme: state.theme,
+    }));
+  }catch(e){}
+}
+
+function loadState(){
+  try{
+    var d=localStorage.getItem('qc_creator');
+    if(d){
+      var p=JSON.parse(d);
+      state.modules=p.modules||[];
+      state.sessions=p.sessions||[];
+      state.passMark=p.passMark||75;
+      state.theme=p.theme||'dark';
+    }
+  }catch(e){}
+}
+
 function uid(){ return Math.random().toString(36).slice(2,9); }
 function nowISO(){ return new Date().toISOString(); }
 function fmtDate(iso){ return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
@@ -338,6 +364,12 @@ var modState={tab:'csv',name:'',questions:[],err:'',qText:'',opts:['','','',''],
 function renderModules(){
   var ms=state.modules;
   var html='<div class="sh"><div><div class="st">Training Modules</div><div class="ss">Import CSV or add questions manually</div></div></div>';
+  // Publish bar at top of modules
+  html+='<div style="background:linear-gradient(135deg,rgba(79,142,247,.1),rgba(167,139,250,.1));border:1px solid rgba(79,142,247,.25);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">';
+  html+='<div><div style="font-size:13px;font-weight:600;margin-bottom:2px">📡 Publish to Students</div>';
+  html+='<div style="font-size:11px;color:var(--tx2)">'+ms.length+' module(s) ready · Download modules.json then upload to GitHub</div></div>';
+  html+='<button class="btn btn-p btn-sm" onclick="publishModules()"'+(ms.length?'':' disabled')+'>⬆ Publish All Modules</button>';
+  html+='</div>';
   if(ms.length){
     html+='<div class="ct">Saved Modules ('+ms.length+')</div><div class="g3" style="margin-bottom:18px">';
     ms.forEach(function(m,i){
@@ -505,6 +537,7 @@ function saveModule(){
   var topics=[...new Set(modState.questions.map(function(q){return q.topic;}))];
   state.modules.push({id:uid(),name:modState.name.trim(),topics:topics,questions:modState.questions.slice(),createdAt:nowISO()});
   modState.name=''; modState.questions=[]; modState.err=''; modState.qText=''; modState.opts=['','','','']; modState.topic='';
+  saveState();
   renderPage();
 }
 
@@ -712,6 +745,7 @@ function finishQuiz(){
   });
   state.sessions.push({id:uid(),moduleId:quiz.moduleId,moduleName:quiz.moduleName,questions:quiz.questions,answers:quiz.answers,totalQuestions:quiz.questions.length,correctCount:cc,score:score,passed:score>=state.passMark,topicBreakdown:tb,date:nowISO(),durationSeconds:quiz.elapsed});
   state.activeQuiz=null;
+  saveState();
   navigate('results');
 }
 
@@ -898,11 +932,6 @@ function renderAttention(){
 // ── SETTINGS ──────────────────────────────────────────────────────────────────
 function renderSettings(){
   var html='<div style="max-width:500px">';
-  html+='<div class="card" style="border:1px solid rgba(79,142,247,.3);background:rgba(79,142,247,.04)"><div class="ct">Publish to Students</div>';
-html+='<div style="font-size:13px;color:var(--tx2);margin-bottom:12px;line-height:1.6">Export all <strong style="color:var(--tx)">'+state.modules.length+' module(s)</strong> as a JSON file, then upload it to your GitHub repo to push updates to all students.</div>';
-html+='<button class="btn btn-p" onclick="publishModules()">⬆ Publish All Modules</button>';
-html+='<div style="font-size:11px;color:var(--tx3);margin-top:10px">After downloading, upload <strong>modules.json</strong> to the root of your Training-Quiz-Coach repo on GitHub.</div>';
-html+='</div>';
   html+='<div class="sh"><div><div class="st">Settings</div></div></div>';
   html+='<div class="card"><div class="ct">Appearance</div>';
   html+='<div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:600">Theme</div></div>';
@@ -917,10 +946,10 @@ html+='</div>';
 }
 
 function bindSettings(){}
-function savePassMark(){ var el=document.getElementById('pass-mark'); if(el) state.passMark=+el.value; renderPage(); }
+function savePassMark(){ var el=document.getElementById('pass-mark'); if(el) state.passMark=+el.value; saveState(); renderPage(); }
 
 // ── THEME & SIDEBAR ───────────────────────────────────────────────────────────
-function toggleTheme(){ state.theme=state.theme==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',state.theme); document.getElementById('theme-btn').textContent=state.theme==='dark'?'☀':'🌙'; }
+function toggleTheme(){ state.theme=state.theme==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',state.theme); document.getElementById('theme-btn').textContent=state.theme==='dark'?'☀':'🌙'; saveState(); }
 function setTheme(t){ state.theme=t; document.documentElement.setAttribute('data-theme',t); document.getElementById('theme-btn').textContent=t==='dark'?'☀':'🌙'; renderPage(); }
 
 function toggleSidebar(){
@@ -936,22 +965,11 @@ function closeSidebar(){
   ov.style.display='none';
 }
 document.getElementById('overlay').onclick=closeSidebar;
-  
-// ── PUBLISH ───────────────────────────────────────────────────────────────────
-function publishModules(){
-  if(!state.modules.length){alert('No modules to publish.');return;}
-  var payload=JSON.stringify({
-    version: new Date().toISOString(),
-    modules: state.modules
-  }, null, 2);
-  var a=document.createElement('a');
-  a.href='data:application/json;charset=utf-8,'+encodeURIComponent(payload);
-  a.download='modules.json';
-  a.click();
-  alert('modules.json downloaded!\n\nNow upload it to your Training-Quiz-Coach repo on GitHub to make it live for students.');
-}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
+loadState();
+if(state.theme==='light') document.documentElement.setAttribute('data-theme','light');
+document.getElementById('theme-btn').textContent=state.theme==='dark'?'☀':'🌙';
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     navigator.serviceWorker.register('service-worker.js');
